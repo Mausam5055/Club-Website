@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
+import { Video } from './video'
+
 
 export default function ImgeSlider() {
   return (
@@ -11,7 +13,12 @@ export default function ImgeSlider() {
     <div className="flex flex-col lg:flex-row p-2 h-[70vh] m-2">
       <div className="flex w-full lg:w-[50%] h-full">
         {/* <Image src={"/images/cheetah.jpg"} className="w-full h-full object-cover" alt="cheetah" width={1600} height={1400}/> */}
-        <video className="w-full h-full object-cover" loop muted controls src="/video/linpack.mp4" />
+           {/*<video className="w-full h-full object-cover" loop muted controls preload="none" src="/video/linpack.mp4">
+        <source src="/video/linpack.mp4" type="video/mp4" />
+          Your browser does not support the video tag. 
+        </video>*/}
+        <Video/>
+
       </div>
       <div className="flex items-center justify-center w-full lg:w-[50%] mt-4 lg:mt-0">
         <div className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl">
