@@ -1,5 +1,6 @@
 
 
+// import BookComponent from '@/components/component/frontend/bookComponent'
 import CaruselUsage from '@/components/component/frontend/CaruselUsage'
 import Footer from '@/components/component/frontend/footer/page'
 // import Footer from '@/components/component/frontend/footer'
@@ -22,6 +23,7 @@ export default function page() {
       <Section6 />
       <Section4/>
       <Footer/> 
+     
     </div>
   )
 }

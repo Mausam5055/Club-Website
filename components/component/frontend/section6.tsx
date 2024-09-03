@@ -12,22 +12,22 @@ export default function Section6() {
             </p>
         </div>
         <div className='flex flex-col justify-center gap-y-10 w-[45vw] p-2'>
-            <div className='flex flex-col h-[18vh] border-2 border-red-500 p-2 rounded-md -rotate-2 gap-2'>
+            <div className='flex flex-col h-[18vh] border-2 border-red-500 p-2 rounded-md -rotate-2 gap-2 overflow-clip'>
                 <div className=' text-xl font-serif font-semibold'> Join Our Club
                 </div>
                 <div className='text-sm'>Become a member to access exclusive resources and join our community of MATLAB and Overleaf enthusiasts.</div>
             </div>
-            <div className='flex flex-col h-[18vh] border-2 border-red-500 p-2 rounded-md rotate-2 gap-2'>
+            <div className='flex flex-col h-[18vh] border-2 border-red-500 p-2 rounded-md rotate-2 gap-2 overflow-clip'>
             <div className=' text-xl font-serif font-semibold'> Join Our Club
                 </div>
                 <div className='text-sm'>Become a member to access exclusive resources and join our community of MATLAB and Overleaf enthusiasts.</div>
             </div>
-            <div className='flex flex-col h-[18vh] border-2 border-red-500 p-2 rounded-md -rotate-2 gap-2'>
+            <div className='flex flex-col h-[18vh] border-2 border-red-500 p-2 rounded-md -rotate-2 gap-2 overflow-clip'>
             <div className=' text-xl font-serif font-semibold'> Join Our Club
                 </div>
                 <div className='text-sm'>Become a member to access exclusive resources and join our community of MATLAB and Overleaf enthusiasts.</div>
             </div>
-            <div className='flex flex-col h-[18vh] border-2 border-red-500 p-2 rounded-md rotate-2 gap-2'>
+            <div className='flex flex-col h-[18vh] border-2 border-red-500 p-2 rounded-md rotate-2 gap-2 overflow-clip'>
             <div className=' text-xl font-serif font-semibold'> Join Our Club
                 </div>
                 <div className='text-sm'>Become a member to access exclusive resources and join our community of MATLAB and Overleaf enthusiasts.</div>
