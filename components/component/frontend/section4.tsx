@@ -81,7 +81,7 @@ export default function Section4() {
                 <Image
                   width={1400}
                   height={1400}
-                  src={"/images/khilesh.jpeg"}
+                  src={"/images/Khilesh.jpeg"}
                   alt="profile"
                   className="h-12 w-12 rounded-full bg-gray-300"
                 />
