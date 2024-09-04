@@ -9,7 +9,7 @@ import ImgeSlider from '@/components/component/frontend/ImgeSlider'
 import Navbar from '@/components/component/frontend/page'
 import Section4 from '@/components/component/frontend/section4'
 import Section5 from '@/components/component/frontend/section5'
-import Section6 from '@/components/component/frontend/section6'
+// import Section6 from '@/components/component/frontend/section6'
 import React from 'react'
 
 export default function page() {
@@ -20,7 +20,7 @@ export default function page() {
       <CaruselUsage />
       <ImgeSlider />
       <Section5 />
-      <Section6 />
+      {/* <Section6 /> */}
       <Section4/>
       <Footer/> 
      

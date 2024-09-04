@@ -16,7 +16,7 @@ const BookComponent = () => {
     };
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center md:w-full">
     <div className="pages h-[68vh] w-[48vw]">
         <FlippingPages
             direction="right-to-left"

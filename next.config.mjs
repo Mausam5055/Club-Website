@@ -4,9 +4,21 @@ const nextConfig = {
         remotePatterns: [
             {
               protocol: 'https',
-              hostname: 'www.yudiz.com',
+              hostname: 'swiperjs.com',
               port: '',
-              pathname: '**/codepen/gsap-slider/**',
+              pathname: '**/demos/images/**',
+            },
+            {
+              protocol: 'https',
+              hostname: 'in.mathworks.com',
+              port: '',
+              pathname: '**/videos/**',
+            },
+            {
+              protocol: 'https',
+              hostname: 'www.overleaf.com',
+              port: '',
+              pathname:"**/videos/**",
             },
           ],
     }

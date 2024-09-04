@@ -4,7 +4,7 @@ import Googlemap from '../googlemap'
 
 export default function Footer() {
   return (
-    <div id="about" className='flex-grow  w-screen'>
+    <div id="contact" className='flex-grow  w-screen'>
          <section className="py-10  bg-gray-50 sm:pt-16 lg:pt-24">
     <div className="px-4 sm:px-6 lg:px-8 ">
         <div className="grid grid-cols-2 md:col-span-3 lg:grid-cols-6 gap-y-16 gap-x-12">

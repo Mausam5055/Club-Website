@@ -1,13 +1,22 @@
-import Image from 'next/image';
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
+import TutoralComp from './tutoralComp';
+import OverleafTutorial from './OverleafTutorial';
+ // Import the component to render on "Overleaf Templates" click
 
 export default function Section5() {
+  const [selectedSection, setSelectedSection] = useState<string | null>('matlab');
+
   return (
-    <div className="flex flex-col md:flex-row relative h-auto md:h-[55vh] p-4 md:p-6 items-center justify-center gap-4">
+    <div className="flex flex-col md:flex-row sm:flex-col relative h-auto md:h-[55vh] p-4 md:p-6 items-center justify-center gap-4">
       {/* Text Content */}
       <div className="flex flex-col justify-center w-full md:w-[55vw] gap-y-4 md:gap-y-2 h-full mb-4 md:mb-0">
+        
         {/* Tutorial Section */}
-        <div className="border-l-red-500 hover:border-l-4 w-full h-auto md:h-full p-2 font-serif flex flex-col gap-y-4">
+        <div
+          className="border-l-red-500 hover:border-l-4 w-full h-auto md:h-full p-2 font-serif flex flex-col gap-y-4 cursor-pointer"
+          onClick={() => setSelectedSection('matlab')}
+        >
           <h2 className="text-base sm:text-xl font-serif font-semibold">
             Matlab Tutorials
           </h2>
@@ -18,7 +27,10 @@ export default function Section5() {
         </div>
 
         {/* Templates Section */}
-        <div className="border-l-red-500 hover:border-l-4 w-full h-auto md:h-full p-2 font-serif flex flex-col gap-y-4">
+        <div
+          className="border-l-red-500 hover:border-l-4 w-full h-auto md:h-full p-2 font-serif flex flex-col gap-y-4 cursor-pointer"
+          onClick={() => setSelectedSection('overleaf')}
+        >
           <h2 className="text-base sm:text-xl font-serif font-semibold">
             Overleaf Templates
           </h2>
@@ -30,7 +42,10 @@ export default function Section5() {
         </div>
 
         {/* Community Section */}
-        <div className="border-l-red-500 hover:border-l-4 w-full h-auto md:h-full p-2 font-serif flex flex-col gap-y-4">
+        <div
+          className="border-l-red-500 hover:border-l-4 w-full h-auto md:h-full p-2 font-serif flex flex-col gap-y-4 cursor-pointer"
+          onClick={() => setSelectedSection(null)} // Reset the selection or add another section if needed
+        >
           <h2 className="text-base sm:text-xl font-serif font-semibold">
             Community Forum
           </h2>
@@ -43,14 +58,9 @@ export default function Section5() {
       </div>
 
       {/* Image Section */}
-      <div className="flex w-full md:w-[45vw] h-auto md:h-full">
-        <Image
-          src="/images/animal.jpg"
-          alt="animal"
-          width={1400}
-          height={1400}
-          className="object-cover rounded-md"
-        />
+      <div className="w-full md:w-[45%] h-auto md:h-full">
+        {selectedSection === 'matlab' && <TutoralComp />}
+        {selectedSection === 'overleaf' && <OverleafTutorial />}
       </div>
     </div>
   );

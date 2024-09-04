@@ -19,11 +19,11 @@ export default function Navbar() {
         </div>
 
         <div className='hidden md:flex items-center space-x-4'>
-          <Link href='/frontview/#about' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Home</Link>
-          <a href='/about' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Matlab Tutorials</a>
-          <a href='/about' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>About Us</a>
-          <a href='/services' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Overleaf Resources</a>
-          <a href='/contact' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Contact Us</a>
+          <Link href='/' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Home</Link>
+          <a href='/#matlab' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Matlab Tutorials</a>
+          <a href='/#aboutus' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>About Us</a>
+          <a href='/#overleaf' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Overleaf Resources</a>
+          <a href='/#contact' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Contact Us</a>
         </div>
 
         <div className='md:hidden flex items-center'>

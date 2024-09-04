@@ -10,6 +10,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
@@ -17,7 +18,26 @@
 }
 
 body {
-  background-color: #E9C46A;
+  background-color: #f9e0a2;
+  .swiper {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
+  }
+  
+  .swiper-slide {
+    background-position: center;
+    background-size: cover;
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+  }
 }
 
 @layer utilities {

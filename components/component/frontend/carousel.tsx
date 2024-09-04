@@ -8,6 +8,7 @@ interface Card {
   title: string;
   description: string;
   imageUrl: string;
+  link:string;
 }
 
 interface CarouselProps {
@@ -61,6 +62,7 @@ const Carousel: React.FC<CarouselProps> = ({ cards }) => {
           <div key={slideIndex} className={`w-full flex-shrink-0 grid gap-4 p-6 ${cardsPerSlide === 1 ? 'grid-cols-1' : 'grid-cols-3 grid-rows-2'}`}>
             {cards.slice(slideIndex * cardsPerSlide, slideIndex * cardsPerSlide + cardsPerSlide).map((card) => (
               <div key={card.id} className="w-full h-[50vh] p-4 bg-white rounded-md shadow-md flex flex-col gap-y-2">
+                <a href={card.link}>
                 <Image
                   src={card.imageUrl}
                   alt={card.title}
@@ -68,6 +70,7 @@ const Carousel: React.FC<CarouselProps> = ({ cards }) => {
                   width={1400}
                   height={1200}
                 />
+                </a>
                 <h3 className="text-lg font-bold">{card.title}</h3>
                 <p className="text-sm">{card.description}</p>
               </div>

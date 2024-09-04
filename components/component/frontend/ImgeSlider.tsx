@@ -22,7 +22,7 @@ export default function ImgeSlider() {
 
       </div>
       <div className="flex items-center h-full w-full lg:w-[50%] mt-4 lg:mt-0 p-2">
-        <div className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl">
+        <div className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl ">
         <BookComponent />
         </div>
       </div>
@@ -38,9 +38,11 @@ export default function ImgeSlider() {
           Become a member to access exclusive resources and join our community of <br className="hidden sm:block" /> MATLAB and Overleaf enthusiasts.
         </p>
         <div className='flex flex-col justify-center items-center'>
+          <a href="https://forms.gle/KxZrPb5P1ySvwFQs7">
         <button type="button" className=" flex flex-col justify-center items-center w-[100px] sm:right-12 md:right-[8vw] top-[18vh] md:top-[25vh] rounded-full bg-red-300 border border-black p-2 font-serif font-bold text-sm sm:text-base md:text-lg">
           Join Us
         </button>
+        </a>
         </div>
       </div>
     </div>

@@ -16,8 +16,8 @@ export default function Hero() {
     sharing and collaboration thrive.
   </p>
   <div className="flex flex-row gap-x-4 ">
-    <a href="/" className="cursor-auto">Join now</a>
-    <a href="/" className="">Learn More</a>
+    <a href="https://forms.gle/KxZrPb5P1ySvwFQs7" className="cursor-auto">Join now</a>
+    <a href="https://in.mathworks.com/" className="">Learn More</a>
   </div>
 </div>
   );

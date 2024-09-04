@@ -32,17 +32,15 @@ export default function Section4() {
                 />
                 <div className="flex flex-col">
                   <div className="text-lg font-serif font-semibold">
-                    Name
+                  Ayush Pandey
                   </div>
                   <div className="text-sm font-serif font-light">
-                    Position
+                    Club Member
                   </div>
                 </div>
               </div>
               <div className="line-clamp-3 m-2 ">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Reiciendis voluptates quibusdam optio. Nisi, nihil at
-                pariatur recusandae est exercitationem veli.
+                The MATLAB tutorials were incredibly helpful in getting me up to speed with numerical computing. I can now analyze data more efficiently thanks to the club.
               </div>
             </div>
           </div>
@@ -60,17 +58,15 @@ export default function Section4() {
                 />
                 <div className="flex flex-col">
                   <div className="text-lg font-serif font-semibold">
-                    Name
+                    Himanshu Jha
                   </div>
                   <div className="text-sm font-serif font-light">
-                    Position
+                    Club Member
                   </div>
                 </div>
               </div>
               <div className="line-clamp-3 m-2">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Reiciendis voluptates quibusdam optio. Nisi, nihil at
-                pariatur recusandae est exercitationem veli.
+              Learning LaTeX with Overleaf through the club s tutorials was a game-changer for my academic writing. My reports and papers look so much more professional now! 
               </div>
             </div>
           </div>
@@ -91,17 +87,15 @@ export default function Section4() {
                 />
                 <div className="flex flex-col">
                   <div className="text-lg font-serif font-semibold">
-                    Name
+                    Khilesh Bhangale
                   </div>
                   <div className="text-sm font-serif font-light">
-                    Position
+                    Club Member
                   </div>
                 </div>
               </div>
               <div className="line-clamp-3 m-2">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Reiciendis voluptates quibusdam optio. Nisi, nihil at
-                pariatur recusandae est exercitationem veli.
+                I used to struggle with formatting my research papers. The Overleaf tutorials from the club made the entire process so much easier and less time-consuming.
               </div>
             </div>
           </div>
@@ -119,17 +113,15 @@ export default function Section4() {
                 />
                 <div className="flex flex-col">
                   <div className="text-lg font-serif font-semibold">
-                    Name
+                    Abhinav singh
                   </div>
                   <div className="text-sm font-serif font-light">
-                    Position
+                    Club Member
                   </div>
                 </div>
               </div>
               <div className="line-clamp-3 m-2">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Reiciendis voluptates quibusdam optio. Nisi, nihil at
-                pariatur recusandae est exercitationem veli.
+              The hands-on approach of the clubs MATLAB workshops really helped solidify my understanding. Im now confident using it for my projects and assignments. 
               </div>
             </div>
           </div>
