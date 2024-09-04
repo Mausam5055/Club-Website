@@ -22,7 +22,7 @@ export default function Navbar() {
           <Link href='/' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Home</Link>
           <a href='/#matlab' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Matlab Tutorials</a>
           <a href='/#aboutus' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>About Us</a>
-          <a href='/#overleaf' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Overleaf Resources</a>
+          <a href='/#matlab' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Overleaf Resources</a>
           <a href='/#contact' className='py-2 px-4 text-slate-800  font-serif text-xl hover:text-indigo-500'>Contact Us</a>
         </div>
 

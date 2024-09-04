@@ -20,6 +20,12 @@ const nextConfig = {
               port: '',
               pathname:"**/videos/**",
             },
+            {
+              protocol: 'https',
+              hostname: 'media.licdn.com',
+              port: '',
+              pathname:"**/dms/image/v2/D4D03AQHcmgOH1C86ww/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/**",
+            },
           ],
     }
 };
