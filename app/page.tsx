@@ -19,7 +19,7 @@ export default function page() {
       <Hero/>
       <CaruselUsage />
       <ImgeSlider />
-      <Section5 />
+      {/* <Section5 /> */}
       {/* <Section6 /> */}
       <Section4/>
       <Footer/> 

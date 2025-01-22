@@ -72,7 +72,7 @@ const Carousel: React.FC<CarouselProps> = ({ cards }) => {
                 />
                 </a>
                 <h3 className="text-lg font-bold">{card.title}</h3>
-                <p className="text-sm">{card.description}</p>
+                <p className="text-sm overflow-hidden">{card.description}</p>
               </div>
             ))}
           </div>

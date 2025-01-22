@@ -8,7 +8,7 @@ export default function Section5() {
   const [selectedSection, setSelectedSection] = useState<string | null>('matlab');
 
   return (
-    <div className="flex flex-col md:flex-row sm:flex-col relative h-auto md:h-[55vh] p-4 md:p-6 items-center justify-center gap-4">
+    <div className="flex flex-col md:flex-row sm:flex-col relative lg:top-[-20] h-auto md:h-[55vh] p-4 md:p-6 items-center justify-center gap-4">
       {/* Text Content */}
       <div className="flex flex-col justify-center w-full md:w-[55vw] gap-y-4 md:gap-y-2 h-full mb-4 md:mb-0">
         
