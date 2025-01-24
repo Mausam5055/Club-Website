@@ -61,7 +61,7 @@ const Carousel: React.FC<CarouselProps> = ({ cards }) => {
         {Array.from({ length: totalSlides }).map((_, slideIndex) => (
           <div key={slideIndex} className={`w-full flex-shrink-0 grid gap-4 p-6 ${cardsPerSlide === 1 ? 'grid-cols-1' : 'grid-cols-3 grid-rows-2'}`}>
             {cards.slice(slideIndex * cardsPerSlide, slideIndex * cardsPerSlide + cardsPerSlide).map((card) => (
-              <div key={card.id} className="w-full h-[50vh] p-4 bg-white rounded-md shadow-md flex flex-col gap-y-2">
+              <div key={card.id} className=" dark:bg-slate-800 w-full h-[50vh] p-4 bg-white rounded-md shadow-md flex flex-col gap-y-2">
                 <a href={card.link}>
                 <Image
                   src={card.imageUrl}
@@ -71,8 +71,8 @@ const Carousel: React.FC<CarouselProps> = ({ cards }) => {
                   height={1200}
                 />
                 </a>
-                <h3 className="text-lg font-bold">{card.title}</h3>
-                <p className="text-sm overflow-hidden">{card.description}</p>
+                <h3 className="text-lg font-bold text-black dark:text-white ">{card.title}</h3>
+                <p className="text-sm dark:text-white overflow-hidden">{card.description}</p>
               </div>
             ))}
           </div>
