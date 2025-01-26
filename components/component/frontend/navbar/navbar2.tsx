@@ -48,9 +48,7 @@ const Navbar2: React.FC = () => {
                 </div>
               </Link>
             ))}
-            <div className="ml-4">
               <ThemeSwitch />
-            </div>
           </div>
 
           {/* Mobile Menu Button */}

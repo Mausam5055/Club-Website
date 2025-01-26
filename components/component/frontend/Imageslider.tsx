@@ -2,7 +2,6 @@ import Image from 'next/image'
 import React from 'react'
 import { Video } from './video'
 import BookComponent from './bookComponent'
-import EventReport from './Bookcomponent2'
 
 
 export default function Imgeslider() {
@@ -19,7 +18,7 @@ export default function Imgeslider() {
       </div>
       <div className="flex items-center h-full w-full lg:w-[50%] mt-4 lg:mt-0 p-2">
         <div className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl ">
-        <EventReport />
+        {/* <EventReport /> */}
         </div>
       </div>
     </div>
