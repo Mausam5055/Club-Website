@@ -14,13 +14,10 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div className='px-4 overflow-hidden'>
-     
+    <div className='overflow-hidden'>
       <Hero/>
       <CaruselUsage />
       <ImgeSlider />
-      {/* <Section5 /> */}
-      {/* <Section6 /> */}
       <Section4/>
       <Footer/> 
      
