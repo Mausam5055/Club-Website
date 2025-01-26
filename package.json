@@ -21,7 +21,8 @@
     "react-dom": "^18.3.1",
     "react-pageflip": "^2.0.3",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "react-icons/fi": "^4.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.16.1",
