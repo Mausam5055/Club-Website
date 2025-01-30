@@ -4,20 +4,23 @@ import Googlemap from '../googlemap'
 
 export default function Footer() {
   return (
-    <div id="contact" className='flex-grow  w-screen'>
-         <section className="py-10  bg-gray-50 sm:pt-16 lg:pt-24">
-    <div className="px-4 sm:px-6 lg:px-8 ">
-        <div className="grid grid-cols-2 md:col-span-3 lg:grid-cols-6 gap-y-16 gap-x-12">
-            <div className="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
-                <div className='flex flex-row items-center gap-x-2'>
-                <Image className="w-auto h-9" src="/images/logo.png" width={1400} height={1400} alt="" />
-                <span className='font-semibold text-xl text-gray-700'>Linpack Club</span>
-                </div>
+    <div id="contact" className='w-full overflow-hidden'>
+      <section className="py-6 sm:py-10 lg:pt-24 bg-gray-50 dark:bg-gray-900">
+        <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-[2000px]">
+          <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-x-12">
+            {/* Left Section - Logo and Social */}
+            <div className="col-span-1 md:col-span-3 lg:col-span-4 flex flex-col items-center md:items-start">
+              <div className='flex flex-col md:flex-row items-center gap-y-2 md:gap-x-2 mb-4 sm:mb-6'>
+                <Image className="w-auto h-12 md:h-9" src="/images/logo.png" width={1400} height={1400} alt="" />
+                <span className='font-semibold text-2xl md:text-xl text-gray-700 dark:text-gray-200'>Linpack Club</span>
+              </div>
 
-                <p className="text-3xl leading-relaxed text-gray-600 mt-7">Visualize The Unvisible &quot;Maths is Everywheres&quot; </p>
+              <p className="text-lg sm:text-xl lg:text-3xl leading-relaxed text-gray-600 dark:text-gray-300 mt-4 sm:mt-7 text-center md:text-left">
+                Visualize The Unvisible &quot;Maths is Everywheres&quot;
+              </p>
 
-                <ul className="flex items-center space-x-3 mt-9">
-                    <li>
+              <ul className="flex items-center justify-center md:justify-start space-x-4 mt-4 sm:mt-9">
+                <li>
                         <a href="#" title="" className="flex items-center justify-center text-white transition-all duration-200 bg-gray-800 rounded-full w-7 h-7 hover:bg-blue-600 focus:bg-blue-600">
                             <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                 <path
@@ -58,38 +61,47 @@ export default function Footer() {
                             </svg>
                         </a>
                     </li>
-                </ul>
+              </ul>
             </div>
-            <div className='col-span-2 w-[40vw]'>
+
+            {/* Middle Section - Map */}
+            <div className='col-span-1 md:col-span-3 lg:col-span-5 mt-4 sm:mt-8 md:mt-0 flex justify-center items-center'>
+              <div className='w-[90%] md:w-full h-[250px] sm:h-[300px] lg:h-[400px] rounded-lg overflow-hidden'>
                 <Googlemap/>
+              </div>
             </div>
 
-           
-            <div className="col-span-2 md:col-span-2 lg:col-span-2 lg:pl-8">
-                <p className="text-sm font-semibold tracking-widest text-pink-300 uppercase">Subscribe to newsletter</p>
+            {/* Right Section - Newsletter */}
+            <div className="col-span-1 md:col-span-3 lg:col-span-3 flex flex-col items-center md:items-start mt-4 sm:mt-8 md:mt-0">
+              <div className='w-full lg:pl-8'>
+                <p className="text-sm font-semibold tracking-widest text-pink-300 uppercase text-center md:text-left">
+                  Subscribe to newsletter
+                </p>
 
-                <form action="#" method="POST" className="mt-6">
-                    <div>
-                        <label htmlFor="email" className="sr-only">Email</label>
-                        <input type="email" name="email" id="email" placeholder="Enter your email" className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
-                    </div>
+                <form action="#" method="POST" className="mt-4 sm:mt-6 w-full">
+                  <div className='mb-3 sm:mb-4'>
+                    <label htmlFor="email" className="sr-only">Email</label>
+                    <input 
+                      type="email" 
+                      name="email" 
+                      id="email" 
+                      placeholder="Enter your email" 
+                      className="block w-full p-4 text-black dark:text-white placeholder-gray-500 transition-all duration-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" 
+                    />
+                  </div>
 
-                    <button type="submit" className="inline-flex items-center justify-center px-6 py-4 mt-3 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700">Subscribe</button>
+                  <button 
+                    type="submit" 
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-4 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700"
+                  >
+                    Subscribe
+                  </button>
                 </form>
-            </div>
-        </div>
+              </div>
 
-        <hr className="mt-16 mb-10 border-gray-200" />
-
-        <p className="text-sm text-center text-gray-600">© Copyright 2024, All Rights Reserved by Linpack</p>
-    </div>
-</section>
-</div>
-
-    )
-}
-
- {/* <div> */}
+              {/* Keep the commented out sections for future use */}
+              {/* Company Section */}
+              {/* <div> */}
                 {/* <p className="text-sm font-semibold tracking-widest text-pink-300 uppercase">Company</p> */}
 
                 {/* <ul className="mt-6 space-y-4">
@@ -111,11 +123,12 @@ export default function Footer() {
                 </ul> */}
             {/* </div> */}
 
-            {/* <div> */}
+              {/* Help Section */}
+              {/* <div> */}
                 {/* <p className="text-sm font-semibold tracking-widest text-pink-300 uppercase">Help</p> */}
                 {/* <Image src={"/images/animal.jpg"} className='w-24 h-16' width={1400} height={1400} alt="Locate"/> */}
 
-           
+               
 
                 {/* <ul className="mt-6 space-y-4">
                     <li>
@@ -135,5 +148,17 @@ export default function Footer() {
                     </li>
                 </ul> */}
             {/* </div> */}
+            </div>
+          </div>
 
- 
+          <hr className="mt-8 sm:mt-16 mb-6 sm:mb-10 border-gray-200 dark:border-gray-700" />
+
+          <p className="text-sm text-center text-gray-600 dark:text-gray-400">
+            © Copyright 2024, All Rights Reserved by Linpack
+          </p>
+        </div>
+      </section>
+    </div>
+  )
+}
+
