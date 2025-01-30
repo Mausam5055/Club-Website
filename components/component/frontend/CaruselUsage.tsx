@@ -90,7 +90,11 @@ const cardsData = [
 
 export default function CaruselUsage() {
   return (
-    <div className="" id="aboutus">
+    <div className="py-8 px-4" id="aboutus">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">Latest Research & Development</h2>
+        <p className="text-gray-600 dark:text-gray-300">Explore cutting-edge developments in various fields</p>
+      </div>
       <Carousel cards={cardsData} />
     </div>
   );
