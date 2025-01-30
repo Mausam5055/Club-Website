@@ -11,14 +11,25 @@ export default function ImageSlider() {
       </h1>
 
       {/* Image and Book Component Section */}
-      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-8 px-4 w-full max-w-6xl">
-        {/* Video Section */}
-        <div className="flex w-full lg:w-1/2 h-[40vh] lg:h-[60vh] bg-gray-100 dark:bg-gray-800 rounded-md shadow-md">
-          <Video />
+      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-4 sm:gap-8 px-2 sm:px-4 w-full max-w-6xl">
+        {/* Video Section with Modern Frame */}
+        <div className="relative w-full lg:w-1/2 h-[40vh] lg:h-[60vh]">
+          {/* Corner Decorations */}
+          <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-red-500"></div>
+          <div className="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 border-red-500"></div>
+          <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 border-red-500"></div>
+          <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-red-500"></div>
+          
+          {/* Main Video Container */}
+          <div className="w-full h-full bg-white dark:bg-gray-800 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)] p-2">
+            <div className="w-full h-full rounded-md overflow-hidden">
+              <Video />
+            </div>
+          </div>
         </div>
 
         {/* Book Section */}
-        <div className="flex w-full lg:w-1/2 h-auto lg:h-[60vh] bg-gray-100 dark:bg-gray-800 rounded-md shadow-md">
+        <div className="flex w-full lg:w-1/2 h-[45vh] sm:h-[45vh] lg:h-[60vh] bg-transparent rounded-md">
           <BookComponent />
         </div>
       </div>
