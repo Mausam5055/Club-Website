@@ -52,7 +52,7 @@ export default function Section4() {
                 <Image
                   width={1400}
                   height={1400}
-                  src={"https://media.licdn.com/dms/image/v2/D4D03AQHcmgOH1C86ww/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1702583389715?e=1730937600&v=beta&t=dmex9TU0JglpQG0V34j3jLq4WAPEFE1htGGD7s2NckA"}
+                  src={"/images/Himanshu.jpeg"}
                   alt="profile"
                   className="h-12 w-12 rounded-full bg-gray-300"
                 />
