@@ -1,57 +1,46 @@
-"use client"; // Ensure this is included for client-side rendering
-
-import Image from "next/image";
+"use client";
 import { useState } from "react";
 
 export default function TicketForm() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  console.log(API_URL);
+  console.log("API URL:", API_URL); 
+
   const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
-  // const [downloadUrl, setDownloadUrl] = useState("");
   const [error, setError] = useState("");
-  // const [ticketGenerated, setTicketGenerated] = useState(false); // Track if ticket is generated
 
   const generateTicket = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    // setDownloadUrl("");
-    // setTicketGenerated(false); // Reset ticket generation state
 
     try {
-      fetch(`${API_URL}/py/generate-ticket`, {
+      const response = await fetch(`${API_URL}/py/generate-ticket`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
-      })
-        .then((response) => response.blob())
-        .then((blob) => URL.createObjectURL(blob))
-        .then((href) => {
-          const a = document.createElement("a");
-          document.body.appendChild(a);
-          // @ts-ignore
-          a.style = "display: none";
-          // @ts-ignore
-          a.href = href;
-          // @ts-ignore
-          a.download = `${regNo}_ticket.png`;
-          a.click();
-        });
+      });
 
-      // if (!response.ok) {
-      //   const errorData = await response.json();
-      //   throw new Error(errorData.detail || "Something went wrong");
-      // }
-
-      // const data = await response.json();
-      // setDownloadUrl(`${API_URL}${data.ticket}`);
-      // setTicketGenerated(true); // Set the state to indicate ticket is ready
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unknown error occurred");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Server error: ${response.status} - ${errorText}`);
       }
+
+      const blob = await response.blob();
+      const href = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = href;
+      a.download = `${regNo}_ticket.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      URL.revokeObjectURL(href); // Free up memory
+
+    } catch (err) {
+      console.error("Ticket generation error:", err);
+      setError(err instanceof Error ? err.message : "An unknown error occurred");
     }
   };
 
@@ -84,19 +73,6 @@ export default function TicketForm() {
       </form>
 
       {error && <p className="text-red-500 mt-2">{error}</p>}
-
-      {/* Show the download button only if the ticket is generated */}
-      {/* {ticketGenerated && downloadUrl && (
-        <img
-          width={2000}
-          height={647}
-          alt="Ticket"
-          src={downloadUrl}
-          className="block mt-4 text-center bg-green-500 text-white py-2 rounded hover:bg-green-600"
-        >
-          Download Ticket
-        </img> */}
-      {/* )} */}
     </div>
   );
 }

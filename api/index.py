@@ -13,7 +13,7 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",  # Allow frontend to access API on this URL
     "http://localhost",
-    "https://linpack.vercel.app"# For localhost access
+    "https://linpack.vercel.app"
 ]
 
 app.add_middleware(
@@ -62,7 +62,6 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     qr = qr.resize((300, 300))  # Resize QR code
     print("QR Code generated!")  # Debugging
 
-    # Load ticket template
     if not os.path.exists(TEMPLATE_PATH):
         raise FileNotFoundError("Error: ticket.png template not found!")
     ticket = Image.open(TEMPLATE_PATH)
@@ -96,7 +95,6 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     ticket.save(ticket_b64, format="PNG")
     print(f"Ticket saved at {ticket_path}")
     return FileResponse(ticket_path, media_type="image/png", filename=f"{reg_no}_ticket.png")
-    # return {"ticket": f'data:image/png;base64,{base64.b64encode(ticket_b64.getvalue()).decode("utf-8")}' }
 
 @app.get("/api/py/download-ticket/{reg_no}")
 def download_ticket(reg_no: str):
