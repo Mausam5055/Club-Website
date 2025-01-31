@@ -8,31 +8,41 @@ export default function TicketForm() {
   console.log(API_URL);
   const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
-  const [downloadUrl, setDownloadUrl] = useState("");
+  // const [downloadUrl, setDownloadUrl] = useState("");
   const [error, setError] = useState("");
-  const [ticketGenerated, setTicketGenerated] = useState(false); // Track if ticket is generated
+  // const [ticketGenerated, setTicketGenerated] = useState(false); // Track if ticket is generated
 
   const generateTicket = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    setDownloadUrl("");
-    setTicketGenerated(false); // Reset ticket generation state
+    // setDownloadUrl("");
+    // setTicketGenerated(false); // Reset ticket generation state
 
     try {
-      const response = await fetch(`${API_URL}/py/generate-ticket`, {
+      fetch(`${API_URL}/py/generate-ticket`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
-      });
+      })
+        .then((response) => response.blob())
+        .then((blob) => URL.createObjectURL(blob))
+        .then((href) => {
+          const a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = href;
+          a.download = `${regNo}_ticket.png`;
+          a.click();
+        });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Something went wrong");
-      }
+      // if (!response.ok) {
+      //   const errorData = await response.json();
+      //   throw new Error(errorData.detail || "Something went wrong");
+      // }
 
-      const data = await response.json();
-      setDownloadUrl(`${API_URL}${data.ticket}`);
-      setTicketGenerated(true); // Set the state to indicate ticket is ready
+      // const data = await response.json();
+      // setDownloadUrl(`${API_URL}${data.ticket}`);
+      // setTicketGenerated(true); // Set the state to indicate ticket is ready
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -73,7 +83,7 @@ export default function TicketForm() {
       {error && <p className="text-red-500 mt-2">{error}</p>}
 
       {/* Show the download button only if the ticket is generated */}
-      {ticketGenerated && downloadUrl && (
+      {/* {ticketGenerated && downloadUrl && (
         <img
           width={2000}
           height={647}
@@ -82,8 +92,8 @@ export default function TicketForm() {
           className="block mt-4 text-center bg-green-500 text-white py-2 rounded hover:bg-green-600"
         >
           Download Ticket
-        </img>
-      )}
+        </img> */}
+      {/* )} */}
     </div>
   );
 }

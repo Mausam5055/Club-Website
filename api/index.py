@@ -95,8 +95,8 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     ticket_b64 = BytesIO()
     ticket.save(ticket_b64, format="PNG")
     print(f"Ticket saved at {ticket_path}")
-
-    return {"ticket": f'data:image/png;base64,{base64.b64encode(ticket_b64.getvalue()).decode("utf-8")}' }
+    return FileResponse(ticket_path, media_type="image/png", filename=f"{reg_no}_ticket.png")
+    # return {"ticket": f'data:image/png;base64,{base64.b64encode(ticket_b64.getvalue()).decode("utf-8")}' }
 
 @app.get("/api/py/download-ticket/{reg_no}")
 def download_ticket(reg_no: str):
