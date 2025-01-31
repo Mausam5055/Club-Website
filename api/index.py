@@ -10,16 +10,9 @@ from fastapi.responses import FileResponse
 
 app = FastAPI()
 
-# CORS Configuration
-origins = [
-    "http://localhost:3000",  # Allow frontend access
-    "http://localhost",
-    "https://linpack.vercel.app"  # Deployment URL
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
