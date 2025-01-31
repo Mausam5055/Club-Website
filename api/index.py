@@ -11,7 +11,8 @@ from fastapi.responses import FileResponse
 app = FastAPI()
 origins = [
     "http://localhost:3000",  # Allow frontend to access API on this URL
-    "http://localhost",       # For localhost access
+    "http://localhost",
+    "https://linpack.vercel.app"# For localhost access
 ]
 
 app.add_middleware(

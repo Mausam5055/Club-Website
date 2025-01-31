@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function TicketForm() {
-  const API_URL = "http://localhost:3000"; // Change this when deploying
+  const API_URL = `${process.env.API_URL}`; // Change this when deploying
   const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
