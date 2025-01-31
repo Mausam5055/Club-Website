@@ -74,7 +74,7 @@ export default function TicketForm() {
 
       {/* Show the download button only if the ticket is generated */}
       {ticketGenerated && downloadUrl && (
-        <Image
+        <img
           width={2000}
           height={647}
           alt="Ticket"
@@ -82,7 +82,7 @@ export default function TicketForm() {
           className="block mt-4 text-center bg-green-500 text-white py-2 rounded hover:bg-green-600"
         >
           Download Ticket
-        </Image>
+        </img>
       )}
     </div>
   );
