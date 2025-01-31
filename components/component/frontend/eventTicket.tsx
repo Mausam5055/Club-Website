@@ -2,12 +2,13 @@
 import { useState } from "react";
 
 export default function TicketForm() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = "http://linpack.vercel.app/api";
   console.log("API URL:", API_URL); 
 
   const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
   const [error, setError] = useState("");
+  console.log("name:", name, "regNo:", regNo, "error:", error);
 
   const generateTicket = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,24 +20,17 @@ export default function TicketForm() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
       });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Server error: ${response.status} - ${errorText}`);
-      }
-
       const blob = await response.blob();
       const href = URL.createObjectURL(blob);
-
       const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = href;
-      a.download = `${regNo}_ticket.png`;
       document.body.appendChild(a);
+      // @ts-ignore
+      a.style = "display: none";
+      // @ts-ignore
+      a.href = href;
+      // @ts-ignore
+      a.download = `${regNo}_ticket.png`;
       a.click();
-      document.body.removeChild(a);
-
-      URL.revokeObjectURL(href); // Free up memory
 
     } catch (err) {
       console.error("Ticket generation error:", err);
