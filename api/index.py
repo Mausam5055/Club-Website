@@ -53,19 +53,24 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
 
     # Generate unique hashed QR code
     data = f"{name.strip()}-{reg_no.strip()}"
+    print(data)
     hashed_data = hashlib.sha256(data.encode()).hexdigest()
+    print(hashed_data)
     
     qr = qrcode.make(hashed_data)
     qr = qr.resize((300, 300))  # Resize QR code
+    print("QR Code generated!")  # Debugging
 
     # Load ticket template
     if not os.path.exists(TEMPLATE_PATH):
         raise FileNotFoundError("Error: ticket.png template not found!")
     ticket = Image.open(TEMPLATE_PATH)
+    print("Ticket template loaded!")
 
     # Paste QR Code at specified position
     qr_code_position = (1550, 150)  # (x, y)
     ticket.paste(qr, qr_code_position)
+    print("QR Code pasted!")
 
     # Draw text
     draw = ImageDraw.Draw(ticket)
@@ -74,6 +79,7 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     except IOError:
         print("Warning: Font not found! Using default font.")
         font = ImageFont.load_default()
+    print("Font loaded!")
 
     # Name and Reg Number positions
     name_position = (1220, 430)  
@@ -81,6 +87,7 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
 
     draw.text(name_position, f"{name}", font=font, fill="White")
     draw.text(reg_number_position, f"{reg_no}", font=font, fill="black")
+    print("Text drawn!")
 
     # Save ticket
     ticket_path = f"tickets/{reg_no}_ticket.png"
