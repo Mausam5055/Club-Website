@@ -1,7 +1,6 @@
 "use client";
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import HTMLFlipBook from 'react-pageflip';
-
+import React, { useEffect, useRef, useState, ReactNode } from "react";
+import HTMLFlipBook from "react-pageflip";
 interface PageProps {
   children: ReactNode;
   className?: string;
@@ -9,7 +8,6 @@ interface PageProps {
 }
 
 interface MyBookProps {}
-
 const Page = React.forwardRef<HTMLDivElement, PageProps>(({ children, className = "", number }, ref) => (
   <div className={`relative ${className} book-page`} ref={ref}>
     <div className="absolute inset-0 bg-white dark:bg-gray-800 shadow-lg">
@@ -31,85 +29,70 @@ export default function MyBook(props: MyBookProps) {
     const updateDimensions = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      const containerHeight = width < 1024 ? height * 0.45 : height * 0.6; // Increased from 0.4 to 0.45 for mobile
+      const containerHeight = width < 1024 ? height * 0.45 : height * 0.6;
 
-      // Calculate width based on height to maintain proportion
-      const calculateDimensions = (containerHeight: number) => {
-        const baseHeight = Math.min(containerHeight - 20, 520); // Reduced padding adjustment
-        const baseWidth = Math.floor(baseHeight / 1.3); // Maintain aspect ratio
+      // Calculate width based on height for aspect ratio
+      const baseHeight = Math.min(containerHeight, 520);
+      const baseWidth = Math.floor(baseHeight / 1.3);
+      const pageWidth = Math.min(baseWidth, 400);
 
-        if (width < 640) {
-          return {
-            width: Math.min(baseWidth, 300), // Increased from 280
-            height: Math.min(baseHeight, 420) // Increased from 380
-          };
-        } else if (width < 768) {
-          return {
-            width: Math.min(baseWidth, width - 80),
-            height: baseHeight
-          };
-        } else {
-          return {
-            width: Math.min(baseWidth, 400),
-            height: baseHeight
-          };
-        }
-      };
+      const newDimensions =
+        width < 640
+          ? { width: Math.min(pageWidth, 300) * 2, height: Math.min(baseHeight, 420) }
+          : width < 768
+          ? { width: Math.min(pageWidth, width - 80) * 2, height: baseHeight }
+          : { width: pageWidth * 2, height: baseHeight };
 
-      setDimensions(calculateDimensions(containerHeight));
+      setDimensions(newDimensions);
     };
 
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') {
+      if (e.key === "ArrowRight") {
         bookRef.current?.pageFlip()?.flipNext();
-      } else if (e.key === 'ArrowLeft') {
+      } else if (e.key === "ArrowLeft") {
         bookRef.current?.pageFlip()?.flipPrev();
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
-    <div className="w-full h-full flex items-center justify-center book-container sm:p-6 overflow-hidden">
-      <HTMLFlipBook 
+    <div className="w-full h-full flex items-center justify-center overflow-hidden">
+      <HTMLFlipBook
         ref={bookRef}
-        width={dimensions.width}
+        width={dimensions.width / 2} // Single page width
         height={dimensions.height}
-        size="stretch"
-        minWidth={240}
-        maxWidth={400}
-        minHeight={380} // Increased from 300
+        size="fixed"
+        minWidth={480}
+        maxWidth={800}
+        minHeight={380}
         maxHeight={520}
         drawShadow={true}
         flippingTime={1000}
-        usePortrait={true}
+        usePortrait={false}
         startZIndex={20}
-        autoSize={false}
         maxShadowOpacity={0.5}
         showCover={true}
         mobileScrollSupport={true}
-        style={{ 
-          margin: '0 auto',
-          padding: '0px',
-        }}
-        className="book-content !scale-95 sm:!scale-100" // Increased scale from 90 to 95
+        className="book-content"
         startPage={0}
         clickEventForward={true}
         useMouseEvents={true}
-        swipeDistance={35}
+        swipeDistance={40}
         showPageCorners={true}
+        style={{ width: dimensions.width, height: dimensions.height }}
         disableFlipByClick={false}
+        autoSize={false}
       >
-        {/* Cover */}
-        <Page className="book-cover relative overflow-hidden" number={0}>
+       <Page className="book-cover relative overflow-hidden" number={0}>
           <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-red-600">
             <div className="book-pattern absolute inset-0 opacity-20"></div>
           </div>
@@ -153,9 +136,39 @@ export default function MyBook(props: MyBookProps) {
             <div className="mt-auto text-right text-[10px] sm:text-xs text-gray-500">2</div>
           </div>
         </Page>
+        <Page number={3}>
+          <div className="h-full flex flex-col p-2 sm:p-3">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2 sm:mb-3 text-red-500 dark:text-red-400">
+              Upcoming Events
+            </h2>
+            <div className="prose dark:prose-invert">
+              <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base">
+                <li>Advanced MATLAB Programming</li>
+                <li>Research Paper Workshop</li>
+                <li>Project Showcase</li>
+              </ul>
+            </div>
+            <div className="mt-auto text-right text-[10px] sm:text-xs text-gray-500">3</div>
+          </div>
+        </Page>
+        <Page number={4}>
+          <div className="h-full flex flex-col p-2 sm:p-3">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2 sm:mb-3 text-red-500 dark:text-red-400">
+              Upcoming Events
+            </h2>
+            <div className="prose dark:prose-invert">
+              <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base">
+                <li>Advanced MATLAB Programming</li>
+                <li>Research Paper Workshop</li>
+                <li>Project Showcase</li>
+              </ul>
+            </div>
+            <div className="mt-auto text-right text-[10px] sm:text-xs text-gray-500">4</div>
+          </div>
+        </Page>
 
         {/* Back Cover */}
-        <Page className="book-cover" number={3}>
+        <Page className="book-cover" number={5}>
           <div className="absolute inset-0 bg-gradient-to-bl from-red-600 to-red-500">
             <div className="absolute inset-0 bg-cover bg-center opacity-10 mix-blend-overlay"></div>
             <div className="relative z-10 h-full flex flex-col justify-center items-center text-white">
