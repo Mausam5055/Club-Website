@@ -29,8 +29,11 @@ export default function TicketForm() {
         .then((href) => {
           const a = document.createElement("a");
           document.body.appendChild(a);
+          // @ts-ignore
           a.style = "display: none";
+          // @ts-ignore
           a.href = href;
+          // @ts-ignore
           a.download = `${regNo}_ticket.png`;
           a.click();
         });
