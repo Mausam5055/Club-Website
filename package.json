@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "next-dev": "next dev",
+    "dev": "concurrently \"pnpm run fastapi-dev\" \"next dev\"",
+    "fastapi-dev": "python -m uvicorn api.index:app --host 0.0.0.0 --port 8000 --reload"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
@@ -30,6 +32,7 @@
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.1.0",
     "postcss": "^8.4.41",

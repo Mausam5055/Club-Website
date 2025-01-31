@@ -1,3 +1,4 @@
+import TicketForm from '@/components/component/frontend/eventTicket'
 import Googlemap from '@/components/component/frontend/googlemap'
 import TutoralComp from '@/components/component/frontend/tutoralComp'
 // import NewComp from '@/components/component/frontend/newComp'
@@ -8,7 +9,8 @@ export default function page() {
     <div>
       {/* <NewComp /> */}
       {/* <Googlemap /> */}
-      <TutoralComp />
+      {/* <TutoralComp /> */}
+      <TicketForm />
     </div>
   )
 }

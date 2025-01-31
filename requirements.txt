@@ -1,0 +1,4 @@
+fastapi
+pillow
+qrcode            
+uvicorn           
