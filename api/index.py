@@ -87,7 +87,7 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     ticket.save(ticket_path)
     print(f"Ticket saved at {ticket_path}")
 
-    return {"download_url": f"/api/download-ticket/{reg_no}"}
+    return {"download_url": f"/download-ticket/{reg_no}"}
 
 @app.get("/api/download-ticket/{reg_no}")
 def download_ticket(reg_no: str):
