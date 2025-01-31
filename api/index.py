@@ -61,7 +61,6 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     qr = qrcode.make(hashed_data)
     qr = qr.resize((300, 300))  # Resize QR code
     print("QR Code generated!")  # Debugging
-
     if not os.path.exists(TEMPLATE_PATH):
         raise FileNotFoundError("Error: ticket.png template not found!")
     ticket = Image.open(TEMPLATE_PATH)
