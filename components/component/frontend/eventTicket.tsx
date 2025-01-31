@@ -18,7 +18,7 @@ export default function TicketForm() {
     setTicketGenerated(false);  // Reset ticket generation state
 
     try {
-      const response = await fetch(`${API_URL}/generate-ticket`, {
+      const response = await fetch(`${API_URL}/py/generate-ticket`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
