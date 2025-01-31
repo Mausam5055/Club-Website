@@ -2,12 +2,12 @@
 import { useState } from "react";
 
 export default function TicketForm() {
-  const API_URL = "https://linpack.vercel.app/api"; 
+  const API_URL = "https://linpack.vercel.app/api";
 
   const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // ✅ Track request state
+  const [loading, setLoading] = useState(false);
 
   const generateTicket = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,8 +33,8 @@ export default function TicketForm() {
       a.download = `${regNo}_ticket.png`;
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(href);
+      document.body.removeChild(a); // ✅ Remove <a> after clicking
+      URL.revokeObjectURL(href); // ✅ Free memory
     } catch (err) {
       console.error("Ticket generation error:", err);
       setError(err instanceof Error ? err.message : "An unknown error occurred");
@@ -66,7 +66,7 @@ export default function TicketForm() {
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
-          disabled={loading} // ✅ Disable button while loading
+          disabled={loading}
         >
           {loading ? "Generating..." : "Generate Ticket"}
         </button>
