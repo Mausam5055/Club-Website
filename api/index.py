@@ -46,7 +46,7 @@ os.makedirs("tickets", exist_ok=True)
 async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     print(f"Received input: name='{name}', reg_no='{reg_no}'")
     user_valid = any(
-        user["name"].strip().lower() == name.strip().lower() and 
+        user["name"].strip() == name.strip() and 
         user["reg_number"].strip() == reg_no.strip()
         for user in USERS_DATA
     )

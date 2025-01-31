@@ -2,17 +2,17 @@
 import { useState } from "react";
 
 export default function TicketForm() {
-  const API_URL = "https://linpack.vercel.app/api";
-  console.log("API URL:", API_URL); 
+  const API_URL = "https://linpack.vercel.app/api"; 
 
   const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
   const [error, setError] = useState("");
-  console.log("name:", name, "regNo:", regNo, "error:", error);
+  const [loading, setLoading] = useState(false); // ✅ Track request state
 
   const generateTicket = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const response = await fetch(`${API_URL}/py/generate-ticket`, {
@@ -20,21 +20,26 @@ export default function TicketForm() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
       });
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
       const blob = await response.blob();
       const href = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      document.body.appendChild(a);
-      // @ts-ignore
-      a.style = "display: none";
-      // @ts-ignore
-      a.href = href;
-      // @ts-ignore
-      a.download = `${regNo}_ticket.png`;
-      a.click();
 
+      a.href = href;
+      a.download = `${regNo}_ticket.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(href);
     } catch (err) {
       console.error("Ticket generation error:", err);
       setError(err instanceof Error ? err.message : "An unknown error occurred");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,9 +65,10 @@ export default function TicketForm() {
         />
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+          disabled={loading} // ✅ Disable button while loading
         >
-          Generate Ticket
+          {loading ? "Generating..." : "Generate Ticket"}
         </button>
       </form>
 
