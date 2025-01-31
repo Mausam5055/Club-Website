@@ -7,6 +7,7 @@ import os
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 from fastapi.responses import FileResponse
+import base64
 
 app = FastAPI()
 origins = [
@@ -91,10 +92,11 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
 
     # Save ticket
     ticket_path = f"tickets/{reg_no}_ticket.png"
-    ticket.save(ticket_path)
+    ticket_b64 = BytesIO()
+    ticket.save(ticket_b64, format="PNG")
     print(f"Ticket saved at {ticket_path}")
 
-    return {"download_url": f"/py/download-ticket/{reg_no}"}
+    return {"ticket": f'data:image/png;base64,{base64.b64encode(ticket_b64.getvalue()).decode("utf-8")}' }
 
 @app.get("/api/py/download-ticket/{reg_no}")
 def download_ticket(reg_no: str):

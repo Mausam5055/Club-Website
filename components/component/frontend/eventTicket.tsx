@@ -1,21 +1,22 @@
-'use client';  // Ensure this is included for client-side rendering
+"use client"; // Ensure this is included for client-side rendering
 
+import Image from "next/image";
 import { useState } from "react";
 
 export default function TicketForm() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL; 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   console.log(API_URL);
   const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
   const [error, setError] = useState("");
-  const [ticketGenerated, setTicketGenerated] = useState(false);  // Track if ticket is generated
+  const [ticketGenerated, setTicketGenerated] = useState(false); // Track if ticket is generated
 
   const generateTicket = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setDownloadUrl("");
-    setTicketGenerated(false);  // Reset ticket generation state
+    setTicketGenerated(false); // Reset ticket generation state
 
     try {
       const response = await fetch(`${API_URL}/py/generate-ticket`, {
@@ -30,8 +31,8 @@ export default function TicketForm() {
       }
 
       const data = await response.json();
-      setDownloadUrl(`${API_URL}${data.download_url}`);
-      setTicketGenerated(true);  // Set the state to indicate ticket is ready
+      setDownloadUrl(`${API_URL}${data.ticket}`);
+      setTicketGenerated(true); // Set the state to indicate ticket is ready
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -73,13 +74,15 @@ export default function TicketForm() {
 
       {/* Show the download button only if the ticket is generated */}
       {ticketGenerated && downloadUrl && (
-        <a
-          href={downloadUrl}
-          download
+        <Image
+          width={2000}
+          height={647}
+          alt="Ticket"
+          src={downloadUrl}
           className="block mt-4 text-center bg-green-500 text-white py-2 rounded hover:bg-green-600"
         >
           Download Ticket
-        </a>
+        </Image>
       )}
     </div>
   );
