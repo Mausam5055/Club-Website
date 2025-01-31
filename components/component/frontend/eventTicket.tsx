@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 export default function TicketForm() {
-  const API_URL = "http://linpack.vercel.app/api";
+  const API_URL = "https://linpack.vercel.app/api";
   console.log("API URL:", API_URL); 
 
   const [name, setName] = useState("");
