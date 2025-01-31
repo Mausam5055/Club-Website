@@ -39,12 +39,9 @@ FONT_PATH = "./arial.ttf"
 # Ensure tickets directory exists
 os.makedirs("tickets", exist_ok=True)
 
-@app.post("/generate-ticket")
+@app.post("/api/generate-ticket")
 async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
-    # Debugging input
     print(f"Received input: name='{name}', reg_no='{reg_no}'")
-
-    # Validate user data (ignoring case & trimming spaces)
     user_valid = any(
         user["name"].strip().lower() == name.strip().lower() and 
         user["reg_number"].strip() == reg_no.strip()
@@ -90,9 +87,9 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     ticket.save(ticket_path)
     print(f"Ticket saved at {ticket_path}")
 
-    return {"download_url": f"/download-ticket/{reg_no}"}
+    return {"download_url": f"/api/download-ticket/{reg_no}"}
 
-@app.get("/download-ticket/{reg_no}")
+@app.get("/api/download-ticket/{reg_no}")
 def download_ticket(reg_no: str):
     ticket_path = f"tickets/{reg_no}_ticket.png"
     if not os.path.exists(ticket_path):

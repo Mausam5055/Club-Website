@@ -8,7 +8,7 @@
     "lint": "next lint",
     "next-dev": "next dev",
     "dev": "concurrently \"pnpm run fastapi-dev\" \"next dev\"",
-    "fastapi-dev": "python -m uvicorn api.index:app --host 0.0.0.0 --port 8000 --reload"
+    "fastapi-dev": "pip3 install -r requirements.txt && python -m uvicorn api.index:app --host 0.0.0.0 --port 8000 --reload"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
