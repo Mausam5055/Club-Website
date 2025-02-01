@@ -1,46 +1,39 @@
-"use client";
+"use client"; // Ensure this is included for client-side rendering
 import { useState } from "react";
 
 export default function TicketForm() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  console.log("API_URL", API_URL);
-
+  console.log(API_URL);
   const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const generateTicket = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}api/py/generate-ticket`, {
+      fetch(`${API_URL}api/py/generate-ticket`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error ${response.status}: ${response.statusText}`);
-      }
-
-      const blob = await response.blob();
-      const href = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-
-      a.href = href;
-      a.download = `${regNo}_ticket.png`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a); // ✅ Remove <a> after clicking
-      URL.revokeObjectURL(href); // ✅ Free memory
+      })
+        .then((response) => response.blob())
+        .then((blob) => URL.createObjectURL(blob))
+        .then((href) => {
+          const a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = href;
+          a.download = `${regNo}_ticket.png`;
+          a.click();
+        });
     } catch (err) {
-      console.error("Ticket generation error:", err);
-      setError(err instanceof Error ? err.message : "An unknown error occurred");
-    } finally {
-      setLoading(false);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     }
   };
 
@@ -66,14 +59,13 @@ export default function TicketForm() {
         />
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
-          disabled={loading}
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
         >
-          {loading ? "Generating..." : "Generate Ticket"}
+          Generate Ticket
         </button>
       </form>
 
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+      {error && <p className="text-red-500 mt-2">{error}</p>}  
     </div>
   );
 }
