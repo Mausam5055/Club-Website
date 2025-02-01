@@ -6,7 +6,7 @@ import hashlib
 import os
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 import base64
 
 app = FastAPI()
@@ -43,6 +43,8 @@ os.makedirs("tickets", exist_ok=True)
 @app.post("/api/py/generate-ticket")
 async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     print(f"Received input: name='{name}', reg_no='{reg_no}'")
+
+    # Validate the user
     user_valid = any(
         user["name"].strip().lower() == name.strip().lower() and 
         user["reg_number"].strip() == reg_no.strip()
@@ -90,12 +92,14 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     draw.text(reg_number_position, f"{reg_no}", font=font, fill="black")
     print("Text drawn!")
 
-    # Save ticket
-    ticket_path = f"tickets/{reg_no}_ticket.png"
+    # Save ticket to memory (no file system interaction)
     ticket_b64 = BytesIO()
     ticket.save(ticket_b64, format="PNG")
-    print(f"Ticket saved at {ticket_path}")
-    return FileResponse(ticket_path, media_type="image/png", filename=f"{reg_no}_ticket.png")
+    ticket_b64.seek(0)  
+
+    # Stream the image directly as a response
+    print("Streaming ticket!")
+    return StreamingResponse(ticket_b64, media_type="image/png", headers={"Content-Disposition": f"attachment; filename={reg_no}_ticket.png"})
 
 @app.get("/api/py/download-ticket/{reg_no}")
 def download_ticket(reg_no: str):

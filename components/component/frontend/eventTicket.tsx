@@ -18,25 +18,42 @@ export default function TicketForm() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
       })
-      .then((href) => {
-        const a = document.createElement("a");
-        document.body.appendChild(a);
-        // @ts-ignore
-        a.style = "display: none";
-        // @ts-ignore
-        a.href = href;
-        // @ts-ignore
-        a.download = `${regNo}_ticket.png`;
-        a.click();
-      });
+        .then((response) => response.blob())  // Treat the response as a blob (binary data)
+        .then((blob) => {
+          // Create a temporary URL for the blob
+          const href = URL.createObjectURL(blob);
+    
+          // Create a link element
+          const a = document.createElement("a");
+          document.body.appendChild(a);
+    
+          // Hide the link element (for cleaner UI)
+          a.style.display = "none";
+    
+          // Set the download URL to the blob URL
+          a.href = href;
+    
+          // Set the download file name
+          a.download = `${regNo}_ticket.png`;
+    
+          // Trigger the download
+          a.click();
+    
+          // Clean up the blob URL after download
+          URL.revokeObjectURL(href);
+        })
+        .catch((err) => {
+          // Handle errors
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("An unknown error occurred");
+          }
+        });
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unknown error occurred");
-      }
+      setError("An unknown error occurred");
     }
-  };
+  }
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
