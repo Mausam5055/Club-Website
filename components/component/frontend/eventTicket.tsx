@@ -13,7 +13,7 @@ export default function TicketForm() {
     setError("");
 
     try {
-      const response = await fetch(`${API_URL}api/py/generate-ticket`, {
+      const response = await fetch(`${API_URL}/api/py/generate-ticket`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
