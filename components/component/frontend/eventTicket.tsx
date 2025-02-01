@@ -2,7 +2,8 @@
 import { useState } from "react";
 
 export default function TicketForm() {
-  const API_URL = "https://linpack.vercel.app/api";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  console.log("API_URL", API_URL);
 
   const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
@@ -15,7 +16,7 @@ export default function TicketForm() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/py/generate-ticket`, {
+      const response = await fetch(`${API_URL}api/py/generate-ticket`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
