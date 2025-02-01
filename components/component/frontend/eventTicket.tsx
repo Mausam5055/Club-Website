@@ -13,47 +13,37 @@ export default function TicketForm() {
     setError("");
 
     try {
-      fetch(`${API_URL}api/py/generate-ticket`, {
+      const response = await fetch(`${API_URL}api/py/generate-ticket`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
-      })
-        .then((response) => response.blob())  // Treat the response as a blob (binary data)
-        .then((blob) => {
-          // Create a temporary URL for the blob
-          const href = URL.createObjectURL(blob);
-    
-          // Create a link element
-          const a = document.createElement("a");
-          document.body.appendChild(a);
-    
-          // Hide the link element (for cleaner UI)
-          a.style.display = "none";
-    
-          // Set the download URL to the blob URL
-          a.href = href;
-    
-          // Set the download file name
-          a.download = `${regNo}_ticket.png`;
-    
-          // Trigger the download
-          a.click();
-    
-          // Clean up the blob URL after download
-          URL.revokeObjectURL(href);
-        })
-        .catch((err) => {
-          // Handle errors
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError("An unknown error occurred");
-          }
-        });
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || 'Failed to generate ticket');
+      }
+
+      // Handle the streaming response and force download
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${regNo}_ticket.png`; // This will force download
+      document.body.appendChild(a);
+      a.click();
+      
+      // Cleanup
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
     } catch (err) {
-      setError("An unknown error occurred");
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     }
-  }
+  };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">

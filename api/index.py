@@ -6,14 +6,15 @@ import hashlib
 import os
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse  # Add this import
 import base64
 
 app = FastAPI()
 origins = [
     "http://localhost:3000",  # Allow frontend to access API on this URL
     "http://localhost",
-    "https://linpack.vercel.app"# For localhost access
+    "https://linpack.vercel.app",  # For localhost access
+     # Add your Vercel domain
 ]
 
 app.add_middleware(
@@ -24,8 +25,13 @@ app.add_middleware(
     allow_headers=["*"],     # Allow all headers
 )
 
+# Update paths to use correct asset paths
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.join(BASE_DIR, "..", "data.json")
+TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "event.png")
+FONT_PATH = os.path.join(BASE_DIR, "assets", "arial.ttf")
+
 # Load User Data
-DATA_FILE = "./data.json"
 if not os.path.exists(DATA_FILE):
     raise FileNotFoundError("Error: data.json not found!")
 
@@ -33,18 +39,9 @@ with open(DATA_FILE, "r") as file:
     USERS_DATA = json.load(file)
 print("Loaded user data:", USERS_DATA)  # Debugging
 
-# Paths
-TEMPLATE_PATH = "./event.png"
-FONT_PATH = "./arial.ttf"
-
-# Ensure tickets directory exists
-os.makedirs("tickets", exist_ok=True)
-
 @app.post("/api/py/generate-ticket")
 async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     print(f"Received input: name='{name}', reg_no='{reg_no}'")
-
-    # Validate the user
     user_valid = any(
         user["name"].strip().lower() == name.strip().lower() and 
         user["reg_number"].strip() == reg_no.strip()
@@ -92,18 +89,15 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     draw.text(reg_number_position, f"{reg_no}", font=font, fill="black")
     print("Text drawn!")
 
-    # Save ticket to memory (no file system interaction)
-    ticket_b64 = BytesIO()
-    ticket.save(ticket_b64, format="PNG")
-    ticket_b64.seek(0)  
+    # Generate ticket in memory only
+    img_byte_arr = BytesIO()
+    ticket.save(img_byte_arr, format='PNG')
+    img_byte_arr.seek(0)
 
-    # Stream the image directly as a response
-    print("Streaming ticket!")
-    return StreamingResponse(ticket_b64, media_type="image/png", headers={"Content-Disposition": f"attachment; filename={reg_no}_ticket.png"})
-
-@app.get("/api/py/download-ticket/{reg_no}")
-def download_ticket(reg_no: str):
-    ticket_path = f"tickets/{reg_no}_ticket.png"
-    if not os.path.exists(ticket_path):
-        raise HTTPException(status_code=404, detail="Ticket not found")
-    return FileResponse(ticket_path, media_type="image/png", filename=f"{reg_no}_ticket.png")
+    return StreamingResponse(
+        img_byte_arr,
+        media_type="image/png",
+        headers={
+            'Content-Disposition': f'attachment; filename="{reg_no}_ticket.png"'
+        }
+    )
