@@ -18,16 +18,17 @@ export default function TicketForm() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ name, reg_no: regNo }),
       })
-        .then((response) => response.blob())
-        .then((blob) => URL.createObjectURL(blob))
-        .then((href) => {
-          const a = document.createElement("a");
-          document.body.appendChild(a);
-          a.style = "display: none";
-          a.href = href;
-          a.download = `${regNo}_ticket.png`;
-          a.click();
-        });
+      .then((response) => response.blob())
+      .then((blob: Blob) => URL.createObjectURL(blob))
+      .then((href) => {
+        const a = document.createElement("a");
+        document.body.appendChild(a);
+        a.style.display = "none"; // ✅ Fix: Correct way to set display style
+        a.href = href;
+        a.download = `${regNo}_ticket.png`;
+        a.click();
+        URL.revokeObjectURL(href); // Optional: Free up memory
+      });
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
