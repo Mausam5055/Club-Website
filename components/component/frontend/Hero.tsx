@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 export default function Hero() {
   const images = [
     {
-      src: "/images/hero-image-31.jpg",
+      src: "/images/hero-image.jpg",
       position: "object-center"
     },
     {
@@ -13,7 +13,7 @@ export default function Hero() {
       position: "object-left"
     },
     {
-      src: "/images/hero-image-3.jpg",
+      src: "/images/hero-image-31.jpg",
       position: "object-center"
     }
   ];
