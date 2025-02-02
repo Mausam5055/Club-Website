@@ -6,13 +6,11 @@ import { chatbot } from "@/lib/chat";
 import { Send, X, Copy, Check, AlertCircle } from "lucide-react";
 import { useTheme } from "next-themes";
 import ReactMarkdown from 'react-markdown';
-
-// Add new interface for messages with error handling
 interface ChatMessage {
   role: "user" | "assistant" | "error";
   content: string;
   timestamp: Date;
-  id: string; // Add unique ID for better key management
+  id: string; 
 }
 
 const Chatbot = ({ onClose }: { onClose: () => void }) => {

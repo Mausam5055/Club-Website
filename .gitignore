@@ -40,5 +40,6 @@ next-env.d.ts
 __pycache__/
 venv
 
-.package-lock.json
-.pnpm-lock.yaml
+package-lock.json
+
+pnpm-lock.yaml
