@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Video } from "./video";
+import  Video  from "./video";
 import BookComponent from "./bookComponent";
 import Image from "next/image";
 
