@@ -1,8 +1,35 @@
+"use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Googlemap from '../googlemap'
 
+declare global {
+  interface Window {
+    CustomSubstackWidget: any;
+  }
+}
+
 export default function Footer() {
+  useEffect(() => {
+    // Adding custom Substack widget script after the component mounts
+    const script = document.createElement("script");
+    script.src = "https://substackapi.com/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Configuring the Substack widget
+    window.CustomSubstackWidget = {
+      substackUrl: "linpack.substack.com", // Your Substack URL
+      placeholder: "example@gmail.com",   // Default placeholder email
+      buttonText: "Subscribe",            // Button text
+      theme: "purple",                    // Choose your theme color
+    };
+
+    return () => {
+      // Cleanup the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, []); // Empty dependency array to run only once
   return (
     <div id="contact" className='w-full overflow-hidden'>
       <section className="py-6 sm:py-10 lg:pt-24 bg-gray-50 dark:bg-gray-900">
@@ -72,13 +99,13 @@ export default function Footer() {
             </div>
 
             {/* Right Section - Newsletter */}
-            <div className="col-span-1 md:col-span-3 lg:col-span-3 flex flex-col items-center md:items-start mt-4 sm:mt-8 md:mt-0">
+            <div className="col-span-1 md:col-span-3 lg:col-span-3 flex flex-col items-center md:items-start mt-4 sm:mt-8 md:mt-0 gap-y-4">
               <div className='w-full lg:pl-8'>
                 <p className="text-sm font-semibold tracking-widest text-pink-300 uppercase text-center md:text-left">
                   Subscribe to newsletter
                 </p>
 
-                <form action="#" method="POST" className="mt-4 sm:mt-6 w-full">
+                {/* <form action="#" method="POST" className="mt-4 sm:mt-6 w-full">
                   <div className='mb-3 sm:mb-4'>
                     <label htmlFor="email" className="sr-only">Email</label>
                     <input 
@@ -96,9 +123,10 @@ export default function Footer() {
                   >
                     Subscribe
                   </button>
-                </form>
+                </form> */}
+                
               </div>
-
+              <div id="custom-substack-embed"></div>
               {/* Keep the commented out sections for future use */}
               {/* Company Section */}
               {/* <div> */}
@@ -158,7 +186,7 @@ export default function Footer() {
           </p>
         </div>
       </section>
+      
     </div>
   )
 }
-
