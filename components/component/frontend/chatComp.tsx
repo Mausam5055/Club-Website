@@ -11,9 +11,15 @@ const ChatComp = () => {
     setIsChatbotOpen(!isChatbotOpen);
   };
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleChatbot();
+  };
+
   return (
-    <div>
-      <div className="fixed bottom-4 right-4 flex items-center">
+    <>
+      <div className="fixed bottom-4 right-4 flex items-center z-40">
         <div className="relative group">
           <div className="absolute -right-1 -top-1 w-3 h-3 bg-red-500 rounded-full animate-bounce"></div>
           <div className="absolute -top-12 right-0 bg-white text-gray-800 px-4 py-2 rounded-lg 
@@ -26,18 +32,24 @@ const ChatComp = () => {
             cursor-pointer shadow-lg z-50 transition-all duration-300 ease-in-out 
             hover:scale-110 hover:shadow-xl transform active:scale-95 
             backdrop-blur-sm backdrop-filter"
-            onClick={toggleChatbot}
+            onClick={handleClick}
           >
             <FaCommentDots size={24} className="text-white animate-pulse" />
           </div>
         </div>
       </div>
       {isChatbotOpen && (
-        <div className="animate-fadeIn">
-          <Chatbot onClose={toggleChatbot} />
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-25 z-40 pointer-events-none"
+        >
+          <div 
+            className="fixed bottom-20 right-4 z-50 pointer-events-auto"
+          >
+            <Chatbot onClose={toggleChatbot} />
+          </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
