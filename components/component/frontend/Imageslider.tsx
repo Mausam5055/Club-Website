@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import { Video } from './video'
-import BookComponent from './bookComponent'
+import  Video  from './video'
 
 
 export default function Imgeslider() {
