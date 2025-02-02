@@ -41,3 +41,5 @@ __pycache__/
 venv
 
 .package-lock.json
+
+chatbot.txt
