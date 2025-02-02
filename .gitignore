@@ -41,3 +41,4 @@ __pycache__/
 venv
 
 .package-lock.json
+.pnpm-lock.yaml
