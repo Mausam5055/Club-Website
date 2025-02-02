@@ -27,7 +27,7 @@ export default function Hero() {
     }, 5000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [images.length]);  // Added images.length to dependencies
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);

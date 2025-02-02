@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Form
+from fastapi import FastAPI, HTTPException, Form, Request
 import json
 import qrcode
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,13 +8,14 @@ from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 from fastapi.responses import FileResponse, StreamingResponse  # Add this import
 import base64
+import datetime
 
 app = FastAPI()
 origins = [
     "http://localhost:3000",  # Allow frontend to access API on this URL
     "http://localhost",
     "https://linpack.vercel.app",  # For localhost access
-     # Add your Vercel domain
+    "https://linpack.vercel.app"  # Add your Vercel domain
 ]
 
 app.add_middleware(
@@ -24,6 +25,42 @@ app.add_middleware(
     allow_methods=["*"],     # Allow all HTTP methods
     allow_headers=["*"],     # Allow all headers
 )
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    print(f"Request path: {request.url.path}")
+    print(f"Request method: {request.method}")
+    try:
+        response = await call_next(request)
+        print(f"Response status: {response.status_code}")
+        return response
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        raise
+
+@app.get("/api/py/health")
+async def health_check():
+    try:
+        # Try to load user data to verify everything is working
+        if os.path.exists(DATA_FILE):
+            with open(DATA_FILE, "r") as file:
+                json.load(file)
+            return {
+                "status": "ok",
+                "message": "API is healthy and data file is accessible",
+                "timestamp": datetime.datetime.now().isoformat()
+            }
+        else:
+            return {
+                "status": "degraded",
+                "message": "API is running but data file is not accessible",
+                "timestamp": datetime.datetime.now().isoformat()
+            }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Health check failed: {str(e)}"
+        )
 
 # Update paths to use correct asset paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
