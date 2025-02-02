@@ -94,7 +94,7 @@ export default function Footer() {
             {/* Middle Section - Map */}
             <div className='col-span-1 md:col-span-3 lg:col-span-5 mt-4 sm:mt-8 md:mt-0 flex justify-center items-center'>
               <div className='w-[90%] md:w-full h-[250px] sm:h-[300px] lg:h-[400px] rounded-lg overflow-hidden'>
-                <Googlemap/>
+                <Googlemap loading="lazy"/>
               </div>
             </div>
 
