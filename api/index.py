@@ -79,24 +79,26 @@ print("Loaded user data:", USERS_DATA)  # Debugging
 @app.post("/api/py/generate-ticket")
 async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     print(f"Received input: name='{name}', reg_no='{reg_no}'")
-    user_valid = any(
-        user["name"].strip().lower() == name.strip().lower() and 
-        user["reg_number"].strip() == reg_no.strip()
-        for user in USERS_DATA
-    )
-    if not user_valid:
-        print("User not found!")  # Debugging
+    
+    # Find the user and their hash from USERS_DATA
+    matching_user = None
+    for user in USERS_DATA:
+        if (user["name"].strip().lower() == name.strip().lower() and 
+            user["reg_number"].strip() == reg_no.strip()):
+            matching_user = user
+            break
+    
+    if not matching_user:
+        print("User not found!")
         raise HTTPException(status_code=404, detail="User not found")
 
-    # Generate unique hashed QR code
-    data = f"{name.strip()}-{reg_no.strip()}"
-    print(data)
-    hashed_data = hashlib.sha256(data.encode()).hexdigest()
-    print(hashed_data)
+    # Use the pre-computed hash from data.json
+    hashed_data = matching_user["hashed_code"]
+    print(f"Using stored hash: {hashed_data}")
 
     qr = qrcode.make(hashed_data)
-    qr = qr.resize((300, 300))  # Resize QR code
-    print("QR Code generated!")  # Debugging
+    qr = qr.resize((300, 300))
+    print("QR Code generated!")
 
     # Load ticket template
     if not os.path.exists(TEMPLATE_PATH):
