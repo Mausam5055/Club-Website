@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React, { useEffect, useRef, useState, ReactNode } from "react";
 import HTMLFlipBook from "react-pageflip";
 
@@ -20,6 +21,8 @@ interface PageContent {
   title: string;
   subtitle?: string;
   items?: string[];
+  image?: string; // Add the image property
+  description?: string; // Add the description property
 }
 
 const Page = React.forwardRef<HTMLDivElement, PageProps>(({ children, className = "", number }, ref) => (
@@ -92,23 +95,76 @@ export default function MyBook(props: MyBookProps) {
     },
     {
       type: 'content',
-      title: "Recent Highlights",
-      items: [
-        "Advanced MATLAB Workshop Series (Spring 2024)",
-        "Technical Paper Writing Workshop with IEEE",
-        "Simulink Project Competition",
-        "Research Methodology Seminar"
-      ]
+      title: "Inaugral Event",
+items: [
+  "1. The Linpack Club hosted its inaugural event titled Embarking on the Basics of MATLAB: A Primer to Unlocking Its Potential.",
+  "2. Event Started with distribution of unique hashed event ticket through college mail id’s to registered student.",
+  "3. The event featured an engaging workshop on MATLAB, designed to provide participants with a comprehensive understanding of the software.",
+  "4. The workshop included hands-on sessions and quizzes to explore new technologies and enhance participants' skills.",
+  "5. Ended with Prize distribution and unique participation certification to all."
+],
+      image: "/images/hero-image-2.jpg",
     },
     {
       type: 'content',
-      title: "Upcoming Events",
+      title: "VIT GOT TALLENT -I",
+items: [
+  `Event has been started by providing Everyone with event unique has codes tickets through everyones mail ids.
+On the day of event music system has been installed and all participants had been provided with event details.
+Blind Fold Race (Round 1) 
+Each team has one blindfolded member.
+The blindfolded member follows instructions from their partner to reach a destination, overcoming hurdles.
+The team that reaches the destination first wins. More instructions will be given by anchors.`,
+
+  `Pop the Balloons (Round 2):
+Teams of two members.
+One team member inflates balloons, while the other pops them by sitting on them.
+Scores are based on the number of balloons popped.`,
+
+  `Karaoke Battle (Round 3):
+Features Word Play, where teams sing spontaneously with a given word.
+Artist Impersonation: Solo challenge to perform a song by a randomly drawn artist.
+Guess the Song
+Any Task can be on your luck.`,
+
+  `Lip Sync Battle (Round 4):
+Teams of two.
+One member wears noise-canceling headphones (can’t hear external sounds).
+The other member imitates a given movie name, dialogue (2-5 words), or actor/actress name through lip movements.
+Points awarded if the guesser gets it right. It will be appreciable if you guys bring your own. Else we will try to give to 10 competing team at a time.`,
+
+  `Face Painting (Round 5):
+Teams of two.
+One member paints an attractive pattern on the other’s face.
+The most impressive and attractive look wins.
+Time limit for completion.
+Participants bring their own makeup/painting tools for safety.`,
+],
+      image: "/images/event2.jpg",
+    },
+    {
+      type: 'content',
+      title: "MatlabVerse A NextWave Hackathon",
       items: [
-        "Advanced MATLAB Programming Workshop",
-        "LaTeX Document Preparation Session",
-        "Technical Paper Writing Masterclass",
-        "Project Showcase Event"
-      ]
+        "The Linpack Club hosted a hackathon titled MATLABVerse: A NextWave Hackathon, which was open to all students.",
+        "The event aimed to provide students with a platform to showcase their skills and creativity in MATLAB programming.",
+        "Participants were required to submit their projects, which were evaluated by a panel of judges.",
+        "The hackathon featured a range of projects, including image processing, data analysis, and machine learning applications.",
+        "The winners were awarded prizes and certificates for their outstanding projects."
+      ],
+      image: "/images/hero-image.jpg",
+    },
+    {
+      type: 'content',
+      title: "Upcoming Events(VIT GOT TALLENT -II)",
+      items: [
+        "The Linpack Club is organizing a second edition of VIT GOT TALLENT, a talent show open to all students.",
+        "The event will feature a range of competitions, including singing, dancing, acting, and more.",
+        "Participants will have the opportunity to showcase their talents and compete for prizes and recognition.",
+        "The event will be held on the VIT campus, with a panel of judges evaluating the performances.",
+        "The winners will be awarded prizes and certificates for their outstanding performances."
+      ],
+      image: "/images/water.jpg",
     },
     {
       type: 'backcover',
@@ -123,21 +179,53 @@ export default function MyBook(props: MyBookProps) {
 
     if (page.type === 'content') {
       return (
-        <div className="h-full flex flex-col p-3 sm:p-4">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-3 sm:mb-4 text-red-500 dark:text-red-400 truncate">
-            {page.title}
-          </h2>
-          <div className="prose dark:prose-invert flex-grow overflow-y-auto">
-            <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base">
-              {page.items?.map((item, idx) => (
-                <li key={idx} className="line-clamp-2">{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="mt-2 text-right text-xs sm:text-sm text-gray-500">{index}</div>
+        <div className="h-full flex flex-col bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+      {/* Full-width Image at the Top (1/4 Page Height) */}
+      {page.image && (
+        <div className="w-full h-1/2 relative">
+          <Image
+            src={page.image}
+            alt={page.title}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-t-lg"
+          />
         </div>
-      );
-    }
+      )}
+
+      {/* Content Section */}
+      <div className="flex flex-col flex-grow p-4 sm:p-6 overflow-y-auto">
+        {/* Title */}
+        <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-red-500 dark:text-red-400">
+          {page.title}
+        </h2>
+
+        {/* Description (Styled like a Book) */}
+        {page.description && (
+          <p className="mt-3 text-sm sm:text-base leading-relaxed text-gray-700 dark:text-gray-300">
+            {page.description}
+          </p>
+        )}
+
+        {/* List Items */}
+        {page.items && (
+          <ul className="mt-4 list-disc space-y-2 sm:space-y-3 text-sm sm:text-base pl-5 text-gray-700 dark:text-gray-300">
+            {page.items.map((item, idx) => (
+              <li key={idx} className="line-clamp-3">
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* Index (Bottom Right) */}
+      <div className="p-3 text-right text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+        {index}
+      </div>
+    </div>
+  );
+}
 
     return (
       <div className={coverStyles}>
