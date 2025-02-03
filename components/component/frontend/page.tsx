@@ -12,7 +12,8 @@ export default function Navbar() {
     <div className='max-w-6xl mx-auto px-4 h-full'>
       <div className='flex justify-between items-center h-full'>
         <div className='flex items-center space-x-4'>
-          <a href='/'>
+          <a href='/' aria-label='Linpack Club'>
+        
             <Image className="LogoImage h-[8vh] w-auto" src="/images/logo.png" alt="Linpack Club logo" width={1600} height={1600} />
           </a>
           <span className='font-semibold text-xl text-gray-700'>Linpack Club</span>

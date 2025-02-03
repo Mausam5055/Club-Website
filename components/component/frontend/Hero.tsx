@@ -111,6 +111,7 @@ export default function Hero() {
                 className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-2"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Join the club"
               >
                 Join Now
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24">
@@ -122,6 +123,7 @@ export default function Hero() {
                 className="group px-8 py-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 font-medium rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Learn more about MATLAB"
               >
                 Learn More
               </a>

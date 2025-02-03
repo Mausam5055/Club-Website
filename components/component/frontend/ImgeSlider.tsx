@@ -33,6 +33,7 @@ export default function ImageSlider() {
           <div className="relative bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full p-6 animate-slideUp">
             <button
               onClick={() => setShowModal(false)}
+              aria-label="Close Announcement"
               className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors hover:rotate-90 duration-300"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,6 +68,7 @@ export default function ImageSlider() {
               </div>
               <a
                 href="#featured-event"
+                aria-label="Learn more about VITB Got Latent Season 2"
                 onClick={() => setShowModal(false)}
                 className="inline-block bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 mt-4 transform hover:scale-105 hover:shadow-lg"
               >
@@ -174,6 +176,7 @@ export default function ImageSlider() {
                 <a
                   href="https://forms.gle/8xwWsK2W7vPkPR3w8"
                   target="_blank"
+                  aria-label="Register for VITB Got Latent Season 2"
                   rel="noopener noreferrer"
                   className="block text-center bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-full font-semibold hover:from-red-600 hover:to-red-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
@@ -241,6 +244,7 @@ export default function ImageSlider() {
 
           {/* Join Us Button */}
           <a href="https://forms.gle/KxZrPb5P1ySvwFQs7" 
+              aria-label="Join MATLAB & Overleaf Club"
              className="mt-6 transform hover:scale-105 transition-all duration-300">
             <button
               type="button"

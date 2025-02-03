@@ -74,7 +74,7 @@ const Carousel: React.FC<CarouselProps> = ({ cards }) => {
                   key={card.id} 
                   className="bg-white dark:bg-slate-800 w-full h-[50vh] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                 >
-                  <a href={card.link} className="block h-full">
+                  <a href={card.link} className="block h-full " aria-label={`View details of ${card.title}`} >
                     <div className="relative h-[55%] overflow-hidden group">
                       <Image
                         src={card.imageUrl}

@@ -63,6 +63,7 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
                 "text-blue-500 hover:underline",
                 isDark && "text-blue-400"
               )}
+              aria-label={`Open link: ${href}`}
             >
               {children}
             </a>
