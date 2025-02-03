@@ -30,6 +30,10 @@
       {
         "src": "/(.*\\.(js|json|css|ico|png|jpg|jpeg|svg|ttf|webp|webm)$)",
         "dest": "/$1"
+      },
+      {
+        "src": "/public/(.*)",
+        "dest": "/public/$1"
       }
     ],
     "env": {
