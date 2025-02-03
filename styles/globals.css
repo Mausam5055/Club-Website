@@ -331,4 +331,106 @@ body {
   }
 }
 
+/* QR Scanner specific styles */
+#reader {
+  width: 100% !important;
+  max-width: 300px !important;
+  margin: 0 auto !important;
+}
 
+#reader * {
+  box-sizing: border-box !important;
+}
+
+#reader video {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 0.5rem !important;
+  object-fit: cover !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  #reader {
+    max-width: 100% !important;
+  }
+  
+  #reader__scan_region {
+    min-height: 300px !important;
+  }
+  
+  #reader__scan_region video {
+    max-height: 300px !important;
+  }
+}
+
+#reader {
+  width: 100% !important;
+  border: none !important;
+}
+
+#reader__scan_region {
+  min-height: 300px !important;
+  background: #000 !important;
+}
+
+#reader__scan_region > video {
+  max-width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+#reader__scan_region img {
+  display: none !important;
+}
+
+/* Hide unnecessary elements */
+#reader__status_span,
+#reader__header_message {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  #reader {
+    position: relative !important;
+    padding: 0 !important;
+  }
+  
+  #reader__scan_region {
+    margin: 0 !important;
+  }
+}
+
+/* Updated QR Scanner styles */
+#qr-reader {
+  width: 100% !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+#qr-reader__status_span {
+  display: none !important;
+}
+
+#qr-reader__camera_selection {
+  display: none !important;
+}
+
+#qr-reader video {
+  border-radius: 0.5rem !important;
+  max-height: 300px !important;
+  object-fit: cover !important;
+}
+
+/* Hide html5-qrcode header texts */
+#qr-reader__header_message {
+  display: none !important;
+}
+
+/* Make scan region full width on mobile */
+@media (max-width: 768px) {
+  #qr-reader__scan_region {
+    width: 100% !important;
+    min-height: 250px !important;
+  }
+}
