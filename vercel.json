@@ -28,12 +28,8 @@
         "dest": "/test"
       },
       {
-        "src": "/(.*\\.(js|json|css|ico|png|jpg|jpeg|svg|ttf|webp)$)",
+        "src": "/(.*\\.(js|json|css|ico|png|jpg|jpeg|svg|ttf|webp|webm)$)",
         "dest": "/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/"
       }
     ],
     "env": {
