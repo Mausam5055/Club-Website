@@ -17,7 +17,7 @@ export default function Video({
         className={cn("w-full h-full object-cover", className)}
         {...props}
       >
-        <source src="/public/video/Linpack.webm" type="video/webm" />
+        <source src="/video/Linpack.webm" type="video/webm" />
         Your browser does not support HTML5 video.
       </video>
   );
