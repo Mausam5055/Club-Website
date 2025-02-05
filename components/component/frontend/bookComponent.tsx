@@ -27,12 +27,7 @@ interface PageContent {
 
 const Page = React.forwardRef<HTMLDivElement, PageProps>(({ children, className = "", number }, ref) => (
   <div className={`relative ${className} book-page`} ref={ref}>
-    <div className="absolute inset-0 bg-white dark:bg-gray-800 shadow-lg">
-      <div className="absolute left-0 top-0 w-full h-full bg-paper-texture opacity-10"></div>
-      <div className="relative z-10 h-full p-2 sm:p-4 md:p-6 flex flex-col">
-        {children}
-      </div>
-    </div>
+    {children}
   </div>
 ));
 
@@ -103,7 +98,7 @@ items: [
   "4. The workshop included hands-on sessions and quizzes to explore new technologies and enhance participants' skills.",
   "5. Ended with Prize distribution and unique participation certification to all."
 ],
-      image: "/images/hero-image-2.jpg",
+      image: "/images/hero-image-69.jpg",
     },
     {
       type: 'content',
@@ -174,70 +169,84 @@ Participants bring their own makeup/painting tools for safety.`,
   ];
 
   const renderPage = (page: PageContent, index: number) => {
-    const coverStyles = "absolute inset-0 bg-gradient-to-br from-red-400 via-red-500 to-red-600";
-    const coverContent = "relative z-10 h-full flex flex-col justify-center items-center text-white p-4 sm:p-6";
-
     if (page.type === 'content') {
       return (
-        <div className="h-full flex flex-col bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-      {/* Full-width Image at the Top (1/4 Page Height) */}
-      {page.image && (
-        <div className="w-full h-1/2 relative">
-          <Image
-            src={page.image}
-            alt={page.title}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-t-lg"
-          />
-        </div>
-      )}
+        <div className="h-full w-full relative">
+          {page.image && (
+            <>
+              <Image
+                src={page.image}
+                alt={page.title}
+                layout="fill"
+                objectFit="cover"
+                priority
+                className="w-full h-full"
+              />
+              {/* Dark overlay with red tint */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-red-900/40"></div>
+              
+              <div className="absolute inset-0 flex flex-col p-6 text-white z-10">
+                {/* Title with red accent */}
+                <div className="mb-4">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                    {page.title}
+                  </h2>
+                  <div className="w-16 h-0.5 bg-gradient-to-r from-red-500 to-red-400"></div>
+                </div>
 
-      {/* Content Section */}
-      <div className="flex flex-col flex-grow p-4 sm:p-6 overflow-y-auto">
-        {/* Title */}
-        <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-red-500 dark:text-red-400">
-          {page.title}
-        </h2>
+                {/* Content with red accents */}
+                {page.items && (
+                  <ul className="space-y-3 text-sm sm:text-base overflow-y-auto pr-4 simple-scrollbar">
+                    {page.items.map((item, idx) => (
+                      <li key={idx} className="text-white/90 hover:text-red-200 transition-colors pl-4 relative">
+                        <div className="absolute left-0 top-1.5 w-2 h-2 bg-red-500 rounded-full opacity-75"></div>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
-        {/* Description (Styled like a Book) */}
-        {page.description && (
-          <p className="mt-3 text-sm sm:text-base leading-relaxed text-gray-700 dark:text-gray-300">
-            {page.description}
-          </p>
-        )}
-
-        {/* List Items */}
-        {page.items && (
-          <ul className="mt-4 list-disc space-y-2 sm:space-y-3 text-sm sm:text-base pl-5 text-gray-700 dark:text-gray-300">
-            {page.items.map((item, idx) => (
-              <li key={idx} className="line-clamp-3">
-                {item}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      {/* Index (Bottom Right) */}
-      <div className="p-3 text-right text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-        {index}
-      </div>
-    </div>
-  );
-}
-
-    return (
-      <div className={coverStyles}>
-        <div className="book-pattern absolute inset-0 opacity-20"></div>
-        <div className={coverContent}>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-center tracking-wider animate-fade-in">
-            {page.title}
-          </h1>
-          <div className="w-16 sm:w-20 h-1 bg-white mb-4 sm:mb-6 rounded-full opacity-75"></div>
-          {page.subtitle && (
-            <p className="text-sm sm:text-base text-center opacity-90">{page.subtitle}</p>
+                {/* Page number with red */}
+                <div className="absolute bottom-4 right-4 text-sm text-red-300/90">
+                  {index}
+                </div>
+              </div>
+            </>
           )}
+        </div>
+      );
+    }
+
+    // Updated cover design with #ef4444 red
+    return (
+      <div className="absolute inset-0 bg-gradient-to-br from-[#ef4444] via-[#ef4444]/90 to-[#ef4444]/80">
+        <div className="absolute inset-0 opacity-20 mix-blend-overlay bg-pattern"></div>
+        <div className="h-full flex flex-col justify-center items-center p-6 text-white relative">
+          {/* Top decorative element */}
+          <div className="absolute top-0 left-1/2 w-px h-20 bg-gradient-to-b from-white/0 via-white/30 to-white/0 transform -translate-x-1/2"></div>
+          
+          {/* Title section */}
+          <div className="text-center space-y-6">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white drop-shadow-lg">
+              {page.title}
+            </h1>
+            
+            <div className="w-32 h-0.5 mx-auto bg-gradient-to-r from-white/20 via-white/40 to-white/20"></div>
+            
+            {page.subtitle && (
+              <p className="text-lg text-white/90 font-light tracking-wide">
+                {page.subtitle}
+              </p>
+            )}
+          </div>
+          
+          {/* Bottom decorative element */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <div className="w-16 h-16 relative">
+              <div className="absolute inset-0 border-2 border-white/20 rounded-full animate-pulse"></div>
+              <div className="absolute inset-3 border border-white/30 rounded-full"></div>
+            </div>
+          </div>
         </div>
       </div>
     );

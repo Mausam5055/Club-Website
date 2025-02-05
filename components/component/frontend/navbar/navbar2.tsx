@@ -9,25 +9,62 @@ const Navbar2: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  // Add scroll handler function
+  const handleScroll = (e: React.MouseEvent<HTMLDivElement>, href: string) => {
+    if (href.startsWith('/#')) {
+      e.preventDefault();
+      
+      // Special handling for home button
+      if (href === '/#home') {
+        // Check if we're on a different page
+        if (window.location.pathname !== '/') {
+          // Navigate to home page
+          window.location.href = '/';
+        } else {
+          // If on same page, just scroll to top
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+      } else {
+        // Original behavior for other sections
+        const element = document.querySelector(href.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      setIsOpen(false); // Close mobile menu if open
+    }
   };
 
   const navItems = [
     { name: "Home", href: "/#home" },
-    { name: "MATLAB", href: "/#matlab" },
     { name: "Leaderboard", href: "https://leaderboard-linpack.vercel.app/" },
     { name: "Expense", href: "https://linpack-expense-tracker.vercel.app/" },
     { name: "About Us", href: "/#aboutus" },
     { name: "Contact", href: "/#contact" },
   ];
 
+  const getItemStyle = (itemName: string) => {
+    switch(itemName) {
+      case "Leaderboard":
+        return "bg-yellow-200 dark:bg-yellow-700 hover:bg-yellow-300 dark:hover:bg-yellow-600";
+      case "Expense":
+        return "bg-blue-200 dark:bg-blue-700 hover:bg-blue-300 dark:hover:bg-blue-600";
+      default:
+        return "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600";
+    }
+  };
+
   return (
     <nav className="bg-gradient-to-b from-gray-100 to-gray-50/90 dark:from-gray-900 dark:to-gray-800/95 backdrop-blur-md sticky top-0 z-50 shadow-md border-b border-gray-200 dark:border-gray-700/50">
-      <div className="max-w-7xl mx-auto pl-0 pr-4 sm:pr-6 lg:pr-8">
-        <div className="flex justify-between w-full items-center h-16">
-          {/* Logo - Adjusted padding */}
-          <div className="text-xl font-bold flex-shrink-0 pl-2">
+      <div className="w-full px-4 sm:px-6 lg:px-8"> {/* Removed max-w-7xl and mx-auto, replaced with w-full */}
+        <div className="flex justify-between items-center h-16">
+          {/* Logo - Removed left padding */}
+          <div className="text-xl font-bold flex-shrink-0">
             <Link href="/#home">
               <div className="text-gray-700 dark:text-gray-300 hover:text-yellow-500 transition-colors flex items-center gap-2">
                 <Image
@@ -42,14 +79,15 @@ const Navbar2: React.FC = () => {
             </Link>
           </div>
 
-          {/* Desktop Menu - Adjusted margin */}
-          <div className="hidden md:flex items-center justify-end space-x-6 flex-1 ml-6">
+          {/* Desktop Menu - Removed margin-left */}
+          <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <Link key={item.name} href={item.href}>
                 <div
-                  className={`px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:text-yellow-500 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors ${
+                  onClick={(e) => handleScroll(e, item.href)}
+                  className={`px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 ${getItemStyle(item.name)} transition-colors ${
                     router?.asPath === item.href
-                      ? "bg-gray-400 text-yellow-500 dark:bg-gray-500"
+                      ? "text-yellow-500"
                       : ""
                   }`}
                   aria-label={item.name}
@@ -112,10 +150,11 @@ const Navbar2: React.FC = () => {
             {navItems.map((item) => (
               <Link key={item.name} href={item.href}>
                 <div
+                  onClick={(e) => handleScroll(e, item.href)}
                   className={`block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-yellow-500 
-                    hover:bg-white/50 dark:hover:bg-gray-600 dark:text-gray-200 transition-all duration-200 ${
+                    ${getItemStyle(item.name)} dark:text-gray-200 transition-all duration-200 ${
                     router?.asPath === item.href
-                      ? "bg-white/70 text-yellow-500 dark:bg-gray-500"
+                      ? "text-yellow-500"
                       : ""
                   }`}
                   aria-label={item.name}
