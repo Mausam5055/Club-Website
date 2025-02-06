@@ -28,7 +28,7 @@ export default function ScannerPage() {
       }
     } catch (error) {
       console.log('Error while stopping scanner:', error);
-      // Force state update even if there's an error
+    
       setIsScanning(false);
     }
   }, []);

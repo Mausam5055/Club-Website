@@ -37,6 +37,14 @@
         "dest": "/test"
       },
       {
+        "src": "/ticket",
+        "dest": "/ticket"
+      },
+      {
+        "src": "/certificate",
+        "dest": "/certificate"
+      },
+      {
         "src": "/(.*\\.(js|json|css|ico|png|jpg|jpeg|svg|ttf|webp|webm)$)",
         "dest": "/$1"
       },

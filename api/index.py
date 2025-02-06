@@ -66,6 +66,7 @@ async def health_check():
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(BASE_DIR, "..", "data.json")
 TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "event.png")
+CERTIFICATE_TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "certificate.png")
 FONT_PATH = os.path.join(BASE_DIR, "assets", "arial.ttf")
 
 # Load User Data
@@ -138,5 +139,62 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
         media_type="image/png",
         headers={
             'Content-Disposition': f'attachment; filename="{reg_no}_ticket.png"'
+        }
+    )
+@app.post("/api/py/generate-certificate")
+async def generate_certificate(name: str = Form(...)):
+    print(f"Received input: name='{name}'")
+    
+    # Find the user by name only
+    matching_user = None
+    for user in USERS_DATA:
+        if user["name"].strip().lower() == name.strip().lower():
+            matching_user = user
+            break
+    
+    if not matching_user:
+        print("User not found!")
+        raise HTTPException(status_code=404, detail="User not found")
+
+    hashed_data = matching_user["hashed_code"]
+    print(f"Using stored hash: {hashed_data}")
+
+    qr = qrcode.make(hashed_data)
+    qr = qr.resize((200, 200))
+    print("QR Code generated!")
+
+    if not os.path.exists(CERTIFICATE_TEMPLATE_PATH):
+        raise FileNotFoundError("Error: certificate template not found!")
+
+    certificate = Image.open(CERTIFICATE_TEMPLATE_PATH)
+    print("Certificate template loaded!")
+
+    qr_code_position = (1650, 1100)  # (x, y)
+    certificate.paste(qr, qr_code_position)
+    print("QR Code pasted!")
+
+    draw = ImageDraw.Draw(certificate)
+    try:
+        font = ImageFont.truetype(FONT_PATH, 75)  # Adjust font size as needed
+    except IOError:
+        print("Warning: Font not found! Using default font.")
+        font = ImageFont.load_default()
+    print("Font loaded!")
+
+    # Name position only (removing reg_no)
+    name_position = (600, 550)  
+    draw.text(name_position, f"{name}", font=font, fill="Brown")
+    print("Name drawn!")
+
+    # Generate certificate in memory only
+    img_byte_arr = BytesIO()
+    certificate.save(img_byte_arr, format='PNG')
+    img_byte_arr.seek(0)
+
+    return StreamingResponse(
+        img_byte_arr,
+        media_type="image/png",
+        headers={
+            'Content-Disposition': f'attachment; filename="{name}_certificate.png"'
         }
     )
