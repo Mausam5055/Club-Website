@@ -44,7 +44,8 @@ const Navbar2: React.FC = () => {
     { name: "Home", href: "/#home" },
     { name: "Leaderboard", href: "https://leaderboard-linpack.vercel.app/" },
     { name: "Expense", href: "https://linpack-expense-tracker.vercel.app/" },
-    { name: "About Us", href: "/#aboutus" },
+    // { name: "About Us", href: "/#aboutus" },
+    { name: "Certificate", href: "/certificate" },
     { name: "Contact", href: "/#contact" },
   ];
 
