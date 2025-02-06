@@ -64,7 +64,7 @@ async def health_check():
 
 # Update paths to use correct asset paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_FILE = os.path.join(BASE_DIR, "..", "data.json")
+DATA_FILE = os.path.join(BASE_DIR, "assets", "data2.json")
 TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "event.png")
 CERTIFICATE_TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "certificate.png")
 FONT_PATH = os.path.join(BASE_DIR, "assets", "arial.ttf")
@@ -75,7 +75,7 @@ if not os.path.exists(DATA_FILE):
 
 with open(DATA_FILE, "r") as file:
     USERS_DATA = json.load(file)
-print("Loaded user data:", USERS_DATA)  # Debugging
+# print("Loaded user data:", USERS_DATA)  # Debugging
 
 @app.post("/api/py/generate-ticket")
 async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
@@ -94,7 +94,7 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
         raise HTTPException(status_code=404, detail="User not found")
 
     # Use the pre-computed hash from data.json
-    hashed_data = matching_user["hashed_code"]
+    hashed_data = matching_user["event_ticket_hash"]
     print(f"Using stored hash: {hashed_data}")
 
     qr = qrcode.make(hashed_data)
@@ -156,7 +156,7 @@ async def generate_certificate(name: str = Form(...)):
         print("User not found!")
         raise HTTPException(status_code=404, detail="User not found")
 
-    hashed_data = matching_user["hashed_code"]
+    hashed_data = matching_user["certificate_hash"]
     print(f"Using stored hash: {hashed_data}")
 
     qr = qrcode.make(hashed_data)

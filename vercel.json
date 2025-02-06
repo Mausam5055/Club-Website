@@ -21,6 +21,15 @@
         "dest": "/scanner"
       },
       {
+        "src": "/ticket-scanner",
+        "headers": {
+          "Permissions-Policy": "camera=(self)",
+          "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';",
+          "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
+        },
+        "dest": "/ticket-scanner"
+      },
+      {
         "src": "/api/py/health",
         "dest": "/api/index.py"
       },
