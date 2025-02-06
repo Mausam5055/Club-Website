@@ -188,7 +188,7 @@ export default function ScannerPage() {
                 </div>
                 <div className="space-y-2 text-gray-700 dark:text-gray-200">
                   <p className="font-semibold">Name: <span className="font-normal">{result.name}</span></p>
-                  <p className="font-semibold">Team: <span className="font-normal">{result.team}</span></p>
+                  <p className="font-semibold">event: <span className="font-normal">{result.event}</span></p>
                   <p className="font-semibold">Reg No: <span className="font-normal">{result.regNumber}</span></p>
                 </div>
               </div>
