@@ -46,7 +46,7 @@ const Navbar2: React.FC = () => {
     { name: "Expense", href: "https://linpack-expense-tracker.vercel.app/" },
     // { name: "About Us", href: "/#aboutus" },
     { name: "Certificate", href: "/certificate" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Ticket", href: "/ticket" },
   ];
 
   const getItemStyle = (itemName: string) => {
