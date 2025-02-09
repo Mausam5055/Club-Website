@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import userData from '@/api/assets/data2.json';
+import certificateData from '@/api/assets/data2.json';
+import ticketData from '@/api/assets/data-tickets.json';
 
 export default function ScannerPage() {
   const [isScanning, setIsScanning] = useState(false);
@@ -11,6 +12,7 @@ export default function ScannerPage() {
     team?: string;
     regNumber?: string;
     event?: string;
+    type?: string;
   } | null>(null);
   const [error, setError] = useState<string>('');
   const scannerRef = useRef<Html5Qrcode | null>(null);
@@ -78,13 +80,24 @@ export default function ScannerPage() {
         { facingMode: "environment" },
         config,
         (decodedText) => {
-          const user = userData.find(user => user.certificate_hash === decodedText);
+          // Check both certificate and ticket databases
+          const certificateUser = certificateData.find(user => 
+            user.certificate_hash === decodedText
+          );
+          
+          const ticketUser = ticketData.find(user => 
+            user.hashed_code === decodedText
+          );
+
+          const user = certificateUser || ticketUser;
+
           if (user) {
             setResult({
               verified: true,
               name: user.name,
-              event: user.event_name,
-              regNumber: user.reg_number
+              event: 'event_name' in user ? user.event_name : undefined,
+              regNumber: 'reg_number' in user ? user.reg_number : '',
+              type: certificateUser ? 'Certificate' : 'Ticket'
             });
             stopScanner();
           } else {
@@ -184,12 +197,12 @@ export default function ScannerPage() {
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                   </svg>
-                  <span className="font-bold text-lg">Valid Ticket</span>
+                  <span className="font-bold text-lg">Valid {result.type}</span>
                 </div>
                 <div className="space-y-2 text-gray-700 dark:text-gray-200">
                   <p className="font-semibold">Name: <span className="font-normal">{result.name}</span></p>
-                  <p className="font-semibold">event: <span className="font-normal">{result.event}</span></p>
-                  <p className="font-semibold">Reg No: <span className="font-normal">{result.regNumber}</span></p>
+                  {result.event && <p className="font-semibold">Event: <span className="font-normal">{result.event}</span></p>}
+                  {result.regNumber && <p className="font-semibold">Reg No: <span className="font-normal">{result.regNumber}</span></p>}
                 </div>
               </div>
             ) : (
@@ -197,7 +210,7 @@ export default function ScannerPage() {
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                 </svg>
-                <span className="font-bold text-lg">Invalid Ticket</span>
+                <span className="font-bold text-lg">Invalid Code</span>
               </div>
             )}
           </div>

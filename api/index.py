@@ -161,12 +161,12 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     print(f"Using stored name: {stored_name}")
 
     # Use the hash field name that matches the JSON structure
-    hashed_data = matching_user["hashed_code"]  # Changed from event_ticket_hash to hashed_code
+    hashed_data = matching_user["hashed_code"]
     print(f"Using stored hash: {hashed_data}")
 
-    qr = qrcode.make(hashed_data)
+    qr = qrcode.make(hashed_data)  # Only store the hash
     qr = qr.resize((300, 300))
-    print("QR Code generated!")
+    print("QR Code generated with hash!")
 
     # Load ticket template
     if not os.path.exists(TEMPLATE_PATH):
@@ -241,9 +241,9 @@ async def generate_certificate(name: str = Form(...)):
     hashed_data = matching_user["certificate_hash"]
     print(f"Using stored hash: {hashed_data}")
 
-    qr = qrcode.make(hashed_data)
+    qr = qrcode.make(hashed_data)  # Only store the hash
     qr = qr.resize((200, 200))
-    print("QR Code generated!")
+    print("QR Code generated with hash!")
 
     if not os.path.exists(CERTIFICATE_TEMPLATE_PATH):
         raise FileNotFoundError("Error: certificate template not found!")
