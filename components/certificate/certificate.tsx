@@ -84,10 +84,10 @@ function ConfirmationModal({
             </svg>
           </div>
           <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">
-            certificate Generated Successfully!
+            Certificate Generated Successfully!
           </h3>
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            Your certificate has been generated and downloaded automatically.
+            Your Certificate has been Generated and Downloaded Automatically...
           </p>
           <div className="mt-4">
             <button
@@ -131,6 +131,21 @@ export default function CertificateForm() {
     return () => clearInterval(interval);
   }, [API_URL]);
 
+  // Add useEffect to clear status message after 3 seconds
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (status) {
+      timeoutId = setTimeout(() => {
+        setStatus("");
+      }, 3000);
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [status]);
+
   const generatecertificate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -141,7 +156,8 @@ export default function CertificateForm() {
       const response = await fetch(`${API_URL}api/py/generate-certificate`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ name, reg_no: regNo }),
+        body: new URLSearchParams({
+           name, reg_no: regNo }),
       });
 
       if (!response.ok) {
@@ -159,10 +175,14 @@ export default function CertificateForm() {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
 
-      setStatus("certificate generated successfully!");
+      setStatus("Certificate Generated Successfully!");
       setShowConfirmation(true);
       setName("");
       setRegNo("");
+      // Confirmation modal will auto-close after 3 seconds
+      setTimeout(() => {
+        setShowConfirmation(false);
+      }, 3000);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "An unknown error occurred"
@@ -206,7 +226,7 @@ export default function CertificateForm() {
                 Event Registration
               </h1>
               <p className="text-lg sm:text-xl text-blue-100 dark:text-blue-200 max-w-2xl mb-6">
-                Generate your exclusive event certificate here
+                Generate your Exclusive Event Certificate here...
               </p>
               <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-6 text-sm text-blue-100">
                 <div className="flex items-center">
@@ -260,7 +280,7 @@ export default function CertificateForm() {
           <div className="lg:col-span-7">
             <div className="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-6 sm:p-8">
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white mb-4 sm:mb-6">
-                certificate Details
+                Certificate Details
               </h2>
               <form
                 onSubmit={generatecertificate}
@@ -345,7 +365,7 @@ export default function CertificateForm() {
                       Generating...
                     </span>
                   ) : (
-                    "Generate certificate"
+                    "Generate Certificate"
                   )}
                 </button>
               </form>
@@ -393,7 +413,7 @@ export default function CertificateForm() {
                 </div>
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
                   <p className="text-gray-600 dark:text-gray-400">
-                    Need help? Contact event support at{" "}
+                    Need help? Contact Event Support at{" "}
                     <a
                       href="mailto:linpack@vitbhopal.ac.in"
                       className="text-blue-600 dark:text-blue-400"
