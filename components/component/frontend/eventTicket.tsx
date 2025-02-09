@@ -57,7 +57,7 @@ function ConfirmationModal({ show, onClose }: { show: boolean; onClose: () => vo
           </div>
           <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">Ticket Generated Successfully!</h3>
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            Your ticket has been generated and downloaded automatically.
+            Your ticket has been Generated and Downloaded Automatically.
           </p>
           <div className="mt-4">
             <button
@@ -101,6 +101,21 @@ export default function TicketForm() {
     return () => clearInterval(interval);
   }, [API_URL]);
 
+  // Add useEffect to clear status message after 3 seconds
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (status) {
+      timeoutId = setTimeout(() => {
+        setStatus("");
+      }, 3000);
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [status]);
+
   const generateTicket = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -133,6 +148,10 @@ export default function TicketForm() {
       setShowConfirmation(true);
       setName("");
       setRegNo("");
+      // Confirmation modal will auto-close after 3 seconds
+      setTimeout(() => {
+        setShowConfirmation(false);
+      }, 3000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unknown error occurred");
     } finally {
