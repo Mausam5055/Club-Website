@@ -156,7 +156,7 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
         )
 
     # Use stored name from database
-    stored_name = matching_user["name"]
+    stored_name = matching_user["team_id"]
     stored_reg_no = matching_user["reg_number"]
     print(f"Using stored name: {stored_name}")
 
@@ -175,7 +175,7 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     print("Ticket template loaded!")
 
     # Paste QR Code at specified position
-    qr_code_position = (1550, 150)  # (x, y)
+    qr_code_position = (1520, 150)  # (x, y)
     ticket.paste(qr, qr_code_position)
     print("QR Code pasted!")
 
@@ -189,8 +189,8 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
     print("Font loaded!")
 
     # Name and Reg Number positions
-    name_position = (1220, 430)  
-    reg_number_position = (1550, 540)  
+    name_position = (1150, 460)  
+    reg_number_position = (1530, 540)  
 
     draw.text(name_position, f"{stored_name}", font=font, fill="White")
     draw.text(reg_number_position, f"{stored_reg_no}", font=font, fill="black")
