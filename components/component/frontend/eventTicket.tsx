@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 // API Status Component
 function ApiStatusIndicator({ isOnline }: { isOnline: boolean }) {
@@ -291,11 +292,18 @@ export default function TicketForm() {
                 </div>
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
                   <p className="text-gray-600 dark:text-gray-400">
-                    Need help? Contact event support at support@example.com
+                    Need help? Contact event support at linpack@vitbhopal.ac.in
                   </p>
                 </div>
               </div>
             </div>
+            <div className="pt-4">
+                  <Link href="/scanner">
+                    <div className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition text-center">
+                      Verify ticket
+                    </div>
+                  </Link>
+                </div>
           </div>
         </div>
       </main>
