@@ -76,5 +76,29 @@
         "reg_number": "24BAS10040",
         "team_id": 8,
         "hashed_code": "d42892083ff3c8555146b4855e72e75ad1b9167194a9cbe35bc53bdd991a33d0"
+    },
+    {
+        "name": "Abhijeet Sandilya",
+        "reg_number": "24MIM10074",
+        "team_id": 9,
+        "hashed_code": "b76f4f4a9413717f69b262b42166db8c4503dd22258dd6d290eae5695394c3fa"
+    },
+    {
+        "name": "Adyasha Biswal",
+        "reg_number": "24BCE10659",
+        "team_id": 9,
+        "hashed_code": "b19c72409b067c448329d9c6e4c06d29cc8380b76ee151d075a9454c79abbe13"
+    },
+    {
+        "name": "Udit Gupta",
+        "reg_number": "24BCE10809",
+        "team_id": 10,
+        "hashed_code": "068fc5655ecae606569cccba0fb19b77fc374a7691b86d1434fd1abbf09527b2"
+    },
+    {
+        "name": "Anshika Modi",
+        "reg_number": "24BCE10814",
+        "team_id": 10,
+        "hashed_code": "0c5245d377566e7d638c7be7e89e58bc53f2946110e3f104beb9df529c008d60"
     }
 ]
