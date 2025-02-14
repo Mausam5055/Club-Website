@@ -76,5 +76,47 @@
         "reg_number": "24BAS10040",
         "team_id": 8,
         "hashed_code": "d42892083ff3c8555146b4855e72e75ad1b9167194a9cbe35bc53bdd991a33d0"
+    },
+    {
+        "name": "Abhijeet Sandilya",
+        "reg_number": "24MIM10074",
+        "team_id": 9,
+        "hashed_code": "b76f4f4a9413717f69b262b42166db8c4503dd22258dd6d290eae5695394c3fa"
+    },
+    {
+        "name": "Adyasha Biswal",
+        "reg_number": "24BCE10659",
+        "team_id": 9,
+        "hashed_code": "b19c72409b067c448329d9c6e4c06d29cc8380b76ee151d075a9454c79abbe13"
+    },
+    {
+        "name": "Udit Gupta",
+        "reg_number": "24BCE10809",
+        "team_id": 10,
+        "hashed_code": "068fc5655ecae606569cccba0fb19b77fc374a7691b86d1434fd1abbf09527b2"
+    },
+    {
+        "name": "Anshika Modi",
+        "reg_number": "24BCE10814",
+        "team_id": 10,
+        "hashed_code": "0c5245d377566e7d638c7be7e89e58bc53f2946110e3f104beb9df529c008d60"
+    },
+    {
+        "name": "Ayush Kaushik",
+        "reg_number": "24BCE11090",
+        "team_id": 11,
+        "hashed_code": "7680c41b8040228b809de55293b79020440d2b30c4f2427e6b14d9dde60d9dfc"
+    },
+    {
+        "name": "Swapnil",
+        "reg_number": "24BCE10934",
+        "team_id": 11,
+        "hashed_code": "de4aaa8f1e8353183bd6526bf878d2daeb01ec7ec726ec0b81933470a03ff8c6"
+    },
+    {
+        "name": "Pratham Verma",
+        "reg_number": "22BAC10005",
+        "team_id": 12,
+        "hashed_code": "d47b79c2a70b79629979adf9ee59fd87847e766e1528117bded7d7c4106e0455"
     }
 ]
