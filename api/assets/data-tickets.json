@@ -100,7 +100,6 @@
         "reg_number": "24BCE10814",
         "team_id": 10,
         "hashed_code": "0c5245d377566e7d638c7be7e89e58bc53f2946110e3f104beb9df529c008d60"
-<<<<<<< HEAD
     },
     {
         "name": "Ayush Kaushik",
@@ -119,7 +118,5 @@
         "reg_number": "22BAC10005",
         "team_id": 12,
         "hashed_code": "d47b79c2a70b79629979adf9ee59fd87847e766e1528117bded7d7c4106e0455"
-=======
->>>>>>> 6ba56b51627ceb7de057ab684244660a097e5841
     }
 ]
