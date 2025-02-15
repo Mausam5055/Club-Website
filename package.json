@@ -11,11 +11,14 @@
     "fastapi-dev": "pip3 install -r requirements.txt && python -m uvicorn api.index:app --host 0.0.0.0 --port 8000 --reload"
   },
   "dependencies": {
+    "@google-cloud/local-auth": "^3.0.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@vercel/kv": "^3.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.0.6",
+    "google-auth-library": "^9.15.1",
+    "googleapis": "^144.0.0",
     "heroicons": "^2.1.5",
     "html5-qrcode": "^2.3.8",
     "lucide-react": "^0.323.0",
