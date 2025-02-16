@@ -18,7 +18,6 @@ export default function ScannerPage() {
   const stopScanner = useCallback(async () => {
     try {
       if (scannerRef.current) {
-        // Check if scanner is actually running before attempting to stop
         const isRunning = scannerRef.current.isScanning;
         
         if (isRunning) {
@@ -29,12 +28,11 @@ export default function ScannerPage() {
       }
     } catch (error) {
       console.log('Error while stopping scanner:', error);
-    
       setIsScanning(false);
     }
   }, []);
 
-  const startScanner = async () => {
+  const startScanner = useCallback(async () => {
     try {
       // First ensure any existing scanner is properly stopped
       if (scannerRef.current) {
@@ -121,7 +119,7 @@ export default function ScannerPage() {
       setError(errorMessage);
       console.error('Scanner error:', err);
     }
-  };
+  }, [stopScanner]);
 
   const handleEntry = async () => {
     if (!result?.verified || isSubmitting) return;
@@ -178,7 +176,7 @@ export default function ScannerPage() {
     setError('');
     setEntryStatus(null);
     startScanner();
-  }, []);
+  }, [startScanner]);
 
   useEffect(() => {
     return () => {
