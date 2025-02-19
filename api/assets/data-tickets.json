@@ -327,5 +327,75 @@
         "team_id": 27,
         "hashed_code": "52275c68a0c5286620ae4c807ffe890ce66c9319c31811d7d7f45761a0002645",
         "Games": "(1)VGL"
+    },
+    {
+        "name": "Aarshi Jaiswal",
+        "reg_number": "24BCE11393",
+        "team_id": 28,
+        "hashed_code": "85e197bc612fc2bdf87769f8a06629f0b0003f05e88e61dca92506aebd5c6471",
+        "Games": "A"
+    },
+    {
+        "name": "Himesh Jham",
+        "reg_number": "24BEY10178",
+        "team_id": 28,
+        "hashed_code": "65f4dc338ac8a0cda8c02ba6579ce90bef11a4db7359c46c2acc59b22467737c",
+        "Games": "A"
+    },
+    {
+        "name": "Prateek Mishra",
+        "reg_number": "24BCY10072",
+        "team_id": 29,
+        "hashed_code": "d6566d6d37c4c9887611fe2258700e6d4962b02539f6beca498b407abe55e8db",
+        "Games": "A"
+    },
+    {
+        "name": "Ashutosh Dora",
+        "reg_number": "24BAI10916",
+        "team_id": 29,
+        "hashed_code": "d96ec6f83b2c805b33c9ffad0bc13d169e6d506585436f507509a9445a856920",
+        "Games": "A"
+    },
+    {
+        "name": "Eshaani",
+        "reg_number": "24BCE10392",
+        "team_id": 30,
+        "hashed_code": "a49f302c1fdf2b0f4091a10405c8151fe694c6c001e28db15d850e28ea0e2bb6",
+        "Games": "A"
+    },
+    {
+        "name": "Charvi",
+        "reg_number": "24BAI10182",
+        "team_id": 30,
+        "hashed_code": "b55d775af9ce655428aa197b80b8b164f9526516a9d5fc8f054758b674a2fdc2",
+        "Games": "A"
+    },
+    {
+        "name": "Sanjana Mall",
+        "reg_number": "24BCE11218",
+        "team_id": 31,
+        "hashed_code": "f4cae77c9eeacb5c110ffff3974f80f0b302f78b20a6e57faf89bf109cfacae1",
+        "Games": "A"
+    },
+    {
+        "name": "Neelam",
+        "reg_number": "24BCE11073",
+        "team_id": 31,
+        "hashed_code": "abb5d4eaa9a5fc7cfca0a9a2603ceae209acf150521ec8c8e3944f9b588f40c6",
+        "Games": "A"
+    },
+    {
+        "name": "Nikita Bhansali",
+        "reg_number": "23BEC10061",
+        "team_id": 32,
+        "hashed_code": "92c7cd6d228688c3c54043146f9f989b4313376f22dd134808e5bae519018bc0",
+        "Games": "A"
+    },
+    {
+        "name": "Aniket Sharma",
+        "reg_number": "21BCE10697",
+        "team_id": 32,
+        "hashed_code": "e5593d28fb13b59eed2ceda19d8948d45b5aa13a18a624c7c51c7428d5b58999",
+        "Games": "A"
     }
 ]
