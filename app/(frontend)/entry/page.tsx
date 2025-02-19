@@ -9,11 +9,14 @@ export default function ScannerPage() {
     verified: boolean;
     name?: string;
     event?: string;
+    teamId?: string;
+    games?: string;
   } | null>(null);
   const [error, setError] = useState<string>('');
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const [entryStatus, setEntryStatus] = useState<'pending' | 'success' | 'error' | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [teamMembers, setTeamMembers] = useState<typeof ticketData>([]);
 
   const stopScanner = useCallback(async () => {
     try {
@@ -85,14 +88,24 @@ export default function ScannerPage() {
           );
 
           if (ticketUser) {
+            // Find team members when a valid ticket is scanned
+            const otherTeamMembers = ticketData.filter(user => 
+              user.team_id === ticketUser.team_id && 
+              user.reg_number !== ticketUser.reg_number
+            );
+            
             setResult({
               verified: true,
               name: ticketUser.name,
-              event: ticketUser.reg_number // or another correct property
+              event: ticketUser.reg_number,
+              teamId: ticketUser.team_id.toString(),
+              games: ticketUser.Games
             });
+            setTeamMembers(otherTeamMembers);
             stopScanner();
           } else {
             setResult({ verified: false });
+            setTeamMembers([]);
           }
         },
         (errorMessage) => {
@@ -126,6 +139,13 @@ export default function ScannerPage() {
     
     setIsSubmitting(true);
     try {
+      // Get current date and time in IST
+      const indianTime = new Date().toLocaleString('en-IN', { 
+        timeZone: 'Asia/Kolkata',
+        dateStyle: 'medium',
+        timeStyle: 'medium'
+      });
+
       const response = await fetch('/api/entry', {
         method: 'POST',
         headers: {
@@ -134,7 +154,7 @@ export default function ScannerPage() {
         body: JSON.stringify({
           name: result.name,
           regNumber: result.event,
-          timestamp: new Date().toISOString(),
+          timestamp: indianTime,
           status: 'ENTERED'
         })
       });
@@ -152,6 +172,9 @@ export default function ScannerPage() {
       }
 
       setEntryStatus('success');
+      if (data.teamMembersAdded > 0) {
+        setError(`Successfully recorded entry and added ${data.teamMembersAdded} team member(s)`);
+      }
       
       // Only auto-reset for successful entries
       setTimeout(() => {
@@ -257,9 +280,30 @@ export default function ScannerPage() {
                   <span className="font-bold text-lg">Valid Ticket</span>
                 </div>
                 <div className="space-y-2 text-gray-700 dark:text-gray-200">
-                  <p className="font-semibold">Name: <span className="font-normal">{result.name}</span></p>
-                  <p className="font-semibold">Event: <span className="font-normal">{result.event}</span></p>
+                  {/* Primary ticket holder info */}
+                  <div className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                    <p className="font-semibold mb-1">Main Participant:</p>
+                    <p className="font-semibold">Name: <span className="font-normal">{result.name}</span></p>
+                    <p className="font-semibold">Registration: <span className="font-normal">{result.event}</span></p>
+                    <p className="font-semibold">Team ID: <span className="font-normal">{result.teamId}</span></p>
+                    <p className="font-semibold">Games: <span className="font-normal">{result.games}</span></p>
+                  </div>
+                  
+                  {/* Team members info */}
+                  {teamMembers.length > 0 && (
+                    <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700/30 rounded-lg">
+                      <p className="font-semibold mb-2">Team Members:</p>
+                      {teamMembers.map((member, index) => (
+                        <div key={member.reg_number} className="mb-3 pb-3 border-b border-gray-200 dark:border-gray-700 last:border-0">
+                          <p className="font-semibold">Name: <span className="font-normal">{member.name}</span></p>
+                          <p className="font-semibold">Registration: <span className="font-normal">{member.reg_number}</span></p>
+                          <p className="font-semibold">Games: <span className="font-normal">{member.Games}</span></p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
+
                 <button
                   onClick={handleEntry}
                   disabled={isSubmitting || entryStatus === 'success'}
