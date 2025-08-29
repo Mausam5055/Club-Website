@@ -1,119 +1,164 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎓 MATLAB & Overleaf Club Website
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-15.1.6-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5.4-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.10-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.0.6-0055FF?style=for-the-badge&logo=framer)](https://www.framer.com/motion/)
+[![GSAP](https://img.shields.io/badge/GSAP-3.13.0-88CE02?style=for-the-badge&logo=greensock)](https://greensock.com/gsap/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployment-000000?style=for-the-badge&logo=vercel)](https://vercel.com/)
 
-First, run the development server:
+A modern, responsive website for the MATLAB & Overleaf Club at VIT Bhopal University. This platform provides students with access to exclusive resources, event registrations, certificate generation, and interactive learning materials.
+
+## 🖼️ Preview
+
+<div align="center">
+  <img src="public/images/hero-image.jpg" alt="Club Hero Section" width="45%" />
+  <img src="public/images/vitbgotlatent2.jpg" alt="Club Events" width="45%" />
+  <br/>
+  <img src="public/images/event2.jpg" alt="Club Activities" width="45%" />
+  <img src="public/images/image2.jpg" alt="Research & Innovation" width="45%" />
+</div>
+
+## 🌟 Key Features
+
+| Feature | Description |
+|--------|-------------|
+| **Event Registration** | Seamless registration for club events with QR code ticket generation |
+| **Certificate Generation** | Automated certificate creation for event participants |
+| **QR Code Scanner** | Verification system for tickets and certificates |
+| **Interactive Tutorials** | Hands-on learning resources for MATLAB and Overleaf |
+| **Research Showcase** | Highlighting cutting-edge research in signal processing, AI, and robotics |
+| **Responsive Design** | Fully responsive layout that works on all devices |
+| **Dark Mode** | Eye-friendly dark theme with AMOLED black support |
+
+## 🛠️ Technology Stack
+
+| Category | Technology |
+|----------|------------|
+| **Frontend** | Next.js 15, TypeScript, Tailwind CSS |
+| **Animations** | Framer Motion, GSAP |
+| **State Management** | React Context API |
+| **UI Components** | Radix UI, Heroicons, Lucide React |
+| **Backend** | FastAPI (Python) |
+| **Database** | JSON-based data storage |
+| **Deployment** | Vercel |
+| **Package Manager** | pnpm |
+
+## 🚀 Getting Started
+
+First, install the dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+```
+
+Then, run the development server:
+
+```bash
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The development server runs both the Next.js frontend and FastAPI backend concurrently.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Environment Variables
 
-## Learn More
+Create a `.env.local` file in the root directory with the following variables:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000/
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+club-website/
+├── app/                    # Next.js app router pages
+├── components/             # Reusable UI components
+│   ├── book/               # Interactive book component
+│   ├── carousel/           # Image carousel components
+│   ├── certificate/        # Certificate generation UI
+│   ├── chat/               # Chatbot interface
+│   ├── event/              # Event ticketing system
+│   ├── hero/               # Hero section components
+│   ├── navbar/             # Navigation components
+│   ├── research/           # Research showcase sections
+│   ├── section/            # Homepage sections
+│   ├── toggle/             # Toggle switch components
+│   ├── tutorial/           # Tutorial components
+│   ├── ui/                 # Generic UI components
+│   └── video/              # Video components
+├── public/                 # Static assets
+│   └── images/             # Image assets
+├── api/                    # FastAPI backend
+│   └── assets/             # Data files
+├── hooks/                  # Custom React hooks
+├── lib/                    # Utility functions
+└── styles/                 # Global styles
+```
 
-## Deploy on Vercel
+## 🎯 Core Functionality
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Event Ticketing System
+- Generate event tickets with unique QR codes
+- Download tickets as PNG images
+- Verify tickets using the QR scanner
+
+### Certificate Generation
+- Create personalized certificates for event participants
+- Automatic download of generated certificates
+- QR code verification system
+
+### Research Showcase
+- Interactive research topic displays
+- Links to external research publications
+- Animated transitions between research topics
+
+### Tutorials & Learning
+- Step-by-step guides for MATLAB and Overleaf
+- Interactive components for hands-on learning
+- Visual demonstrations of key concepts
+
+## 🌐 Deployment
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-# Club Website Frontend Structure (2024 Refactor)
+### Build for Production
 
-## Overview
-The frontend codebase has been refactored for clarity, scalability, and maintainability. All components and pages are now organized by feature and UI type.
-
-## Folder Structure
-
-```
-club-website/
-  components/
-    book/
-      bookComponent.tsx
-    carousel/
-      carousel.tsx
-      CaruselUsage.tsx
-      Imageslider.tsx
-      ImgeSlider.tsx
-    certificate/
-      certificate.tsx
-    chat/
-      chatbot.tsx
-      chatComp.tsx
-    clubsite.tsx
-    event/
-      eventTicket.tsx
-    footer/
-      page.tsx
-    hero/
-      Hero.tsx
-    map/
-      googlemap.tsx
-    navbar/
-      navbar2.tsx
-    page.tsx
-    section/
-      section4.tsx
-      section5.tsx
-      section6.tsx
-    toggle/
-      toggleSwitch.tsx
-    tutorial/
-      OverleafTutorial.tsx
-      tutoralComp.tsx
-    ui/
-      button.tsx
-      card.tsx
-      input.tsx
-      textarea.tsx
-    video/
-      video.tsx
-  app/
-    certificate/
-      page.tsx
-    entry/
-      page.tsx
-    scanner/
-      page.tsx
-    test/
-      page.tsx
-    ticket/
-      page.tsx
-    layout.tsx
-    page.tsx
-    providers/
-      providers.tsx
+```bash
+pnpm build
 ```
 
-## Guidelines
-- **UI components** go in `components/ui/`.
-- **Feature-specific components** go in their own folder under `components/`.
-- **Pages** are organized by feature under `app/` (e.g., `app/certificate/page.tsx`).
-- **No deep or unclear nesting**: Each folder is named for its feature or UI type.
-- **Imports** should use the new paths (e.g., `@/components/hero/Hero`).
+### Start Production Server
 
-## Maintenance
-- When adding new features, create a new folder under `components/` and/or `app/` as needed.
-- Keep UI elements generic and reusable in `ui/`.
-- Update this documentation if the structure changes.
+```bash
+pnpm start
+```
+
+## 🤝 Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📧 Contact
+
+For any queries, please contact the club at [linpack@vitbhopal.ac.in](mailto:linpack@vitbhopal.ac.in)
 
 ---
 
-_Last updated: 2024-08-11_
+<p align="center">
+  Made with ❤️ by the MATLAB & Overleaf Club, VIT Bhopal University
+</p>
