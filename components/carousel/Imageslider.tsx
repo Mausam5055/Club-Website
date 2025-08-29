@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import  Video  from './video'
+import Video from '../video/video'
 
 
 export default function Imgeslider() {

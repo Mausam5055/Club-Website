@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import TutoralComp from './tutoralComp';
-import OverleafTutorial from './OverleafTutorial';
+import TutoralComp from '../tutorial/tutoralComp';
+import OverleafTutorial from '../tutorial/OverleafTutorial';
  // Import the component to render on "Overleaf Templates" click
 
 export default function Section5() {

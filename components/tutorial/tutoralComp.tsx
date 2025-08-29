@@ -86,7 +86,7 @@
 // export default TutoralComp
 import React from 'react'
 
-export default function tutoralComp() {
+export default function TutoralComp() {
   return (
     <div>
       tutorial
