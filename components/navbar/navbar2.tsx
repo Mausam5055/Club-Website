@@ -52,7 +52,7 @@ const Navbar2: React.FC = () => {
   ];
 
   const getItemStyle = (itemName: string) => {
-    return "hover:text-yellow-500 hover:underline underline-offset-8 transition-all duration-300 ease-in-out bg-transparent shadow-none font-semibold tracking-wider text-shadow-sm";
+    return "hover:text-yellow-500 transition-all duration-300 ease-in-out bg-transparent shadow-none font-extralight tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm";
   };
 
   return (
@@ -89,7 +89,7 @@ const Navbar2: React.FC = () => {
               height={36}
               className="rounded-full shadow-md"
             />
-            <span className="whitespace-nowrap font-bold tracking-wider bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm text-lg md:text-xl">MATLAB & LaTeX Club</span>
+            <span className="whitespace-nowrap font-bold tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm text-lg md:text-xl">MATLAB & LaTeX Club</span>
           </div>
         </Link>
       </div>
@@ -205,9 +205,9 @@ const Navbar2: React.FC = () => {
                         router?.asPath === item.href 
                           ? 'bg-gradient-to-r from-yellow-500 to-amber-500 shadow-lg shadow-yellow-500/30' 
                           : 'bg-gray-300 dark:bg-gray-600 group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-purple-500'
-                      }`} />
+                      }`}></div>
                       
-                      <span className="font-medium text-base tracking-wide">
+                      <span className="font-extralight text-base tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm">
                         {item.name}
                       </span>
                     </div>
