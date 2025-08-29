@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers/providers";
-import Navbar2 from "@/components/component/frontend/navbar/navbar2";
+import Navbar2 from "@/components/navbar/navbar2";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
    
       <body className={`${inter.className}`} >
       <Providers>
+         <CustomCursor />
          <Navbar2 />
       {children}
       </Providers>
