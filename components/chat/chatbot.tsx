@@ -3,9 +3,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import clsx from "clsx";
 import { chatbot } from "@/lib/chat";
-import { Send, X, Copy, Check, AlertCircle } from "lucide-react";
+import { Send, X, Copy, Check, AlertCircle, MessageCircle } from "lucide-react";
 import { useTheme } from "next-themes";
 import ReactMarkdown from 'react-markdown';
+
 interface ChatMessage {
   role: "user" | "assistant" | "error";
   content: string;
@@ -53,14 +54,14 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
     return (
       <ReactMarkdown
         components={{
-          p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+          p: ({ children }) => <p className="mb-2 last:mb-0 font-extralight">{children}</p>,
           a: ({ href, children }) => (
             <a
               href={href}
               target="_blank"
               rel="noopener noreferrer"
               className={clsx(
-                "text-blue-500 hover:underline",
+                "text-blue-500 hover:underline font-extralight",
                 isDark && "text-blue-400"
               )}
               aria-label={`Open link: ${href}`}
@@ -70,18 +71,18 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
           ),
           code: ({ children }) => (
             <code className={clsx(
-              "px-1 py-0.5 rounded text-sm font-mono",
+              "px-1 py-0.5 rounded text-sm font-mono font-extralight",
               isDark ? "bg-gray-800" : "bg-gray-100"
             )}>
               {children}
             </code>
           ),
-          ul: ({ children }) => <ul className="list-disc ml-4 mb-2">{children}</ul>,
-          ol: ({ children }) => <ol className="list-decimal ml-4 mb-2">{children}</ol>,
-          li: ({ children }) => <li className="mb-1">{children}</li>,
+          ul: ({ children }) => <ul className="list-disc ml-4 mb-2 font-extralight">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal ml-4 mb-2 font-extralight">{children}</ol>,
+          li: ({ children }) => <li className="mb-1 font-extralight">{children}</li>,
         }}
         className={clsx(
-          "prose prose-sm max-w-none",
+          "prose prose-sm max-w-none font-extralight",
           isDark && "prose-invert"
         )}
       >
@@ -140,15 +141,15 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
   return (
     <div className={clsx(
       "fixed sm:bottom-16 sm:right-4 sm:w-96 w-full bottom-0 right-0",
-      "shadow-xl rounded-lg overflow-hidden z-50 transition-colors duration-200",
-      isDark ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200",
-      "border backdrop-blur-sm backdrop-filter"
+      "shadow-2xl rounded-3xl overflow-hidden z-50 transition-colors duration-200",
+      isDark ? "bg-black/80 border-gray-800" : "bg-white/80 border-gray-200",
+      "border backdrop-blur-xl"
     )}>
       <div className={clsx(
         "flex justify-between items-center px-4 py-3",
-        isDark ? "bg-gradient-to-r from-indigo-900 to-purple-900" : "bg-gradient-to-r from-blue-600 to-blue-700"
+        isDark ? "bg-gradient-to-r from-blue-900/90 to-purple-900/90" : "bg-gradient-to-r from-blue-600 to-purple-600"
       )}>
-        <h3 className="font-bold text-lg text-white">Chat Assistant</h3>
+        <h3 className="font-extralight text-lg text-white tracking-wide drop-shadow">Chat Assistant</h3>
         <button
           onClick={onClose}
           className="p-1.5 rounded-full hover:bg-white/20 transition-colors"
@@ -159,9 +160,20 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
       </div>
 
       <div className={clsx(
-        "p-4 h-[calc(100vh-200px)] sm:h-96 overflow-y-auto space-y-2 scroll-smooth",
-        isDark ? "bg-gray-900" : "bg-gray-50"
+        "p-4 h-[calc(100vh-300px)] sm:h-96 overflow-y-auto space-y-4 scroll-smooth",
+        isDark ? "bg-black/50" : "bg-white/50"
       )}>
+        {messages.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-full text-center px-4">
+            <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-3 rounded-full mb-4">
+              <MessageCircle size={24} className="text-white" />
+            </div>
+            <h4 className="text-lg font-extralight text-gray-800 dark:text-white mb-2">Hello there!</h4>
+            <p className="text-gray-600 dark:text-gray-300 font-extralight text-sm">
+              I&#39;m your AI assistant. Ask me anything about the club, events, or technical topics.
+            </p>
+          </div>
+        )}
         {messages.map((msg, idx) => (
           <div
             key={msg.id}
@@ -174,18 +186,18 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
             <div className="group relative pr-8"> {/* Added padding-right */}
               <div
                 className={clsx(
-                  "px-4 py-2 rounded-2xl shadow-sm transition-all",
-                  "max-w-[85%] w-auto inline-block",
+                  "px-4 py-3 rounded-2xl shadow-sm transition-all",
+                  "max-w-[85%] w-auto inline-block font-extralight",
                   msg.role === "error" 
                     ? "bg-red-100 text-red-800 border-red-200"
                     : msg.role === "user"
                       ? isDark 
-                        ? "bg-indigo-600 text-white rounded-br-none"
-                        : "bg-blue-600 text-white rounded-br-none"
+                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-br-none"
+                        : "bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-br-none"
                       : isDark
-                        ? "bg-gray-800 text-gray-100 rounded-bl-none border-gray-700"
-                        : "bg-white text-gray-800 rounded-bl-none border-gray-200",
-                  "border hover:shadow-md transition-shadow duration-200"
+                        ? "bg-gray-800/80 text-gray-100 rounded-bl-none border border-gray-700"
+                        : "bg-white text-gray-800 rounded-bl-none border border-gray-200",
+                  "hover:shadow-md transition-shadow duration-200"
                 )}
               >
                 {msg.role === "error" ? (
@@ -220,7 +232,7 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
             </div>
             {shouldShowTimestamp(msg, messages[idx - 1]) && (
               <span className={clsx(
-                "text-xs mt-1",
+                "text-xs mt-1 font-extralight",
                 isDark ? "text-gray-400" : "text-gray-500"
               )}>
                 {msg.timestamp.toLocaleTimeString([], { 
@@ -242,7 +254,7 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
               <div className="w-2 h-2 rounded-full animate-bounce delay-75 bg-current"></div>
               <div className="w-2 h-2 rounded-full animate-bounce delay-150 bg-current"></div>
             </div>
-            <span className="text-sm">Assistant is typing...</span>
+            <span className="text-sm font-extralight">Assistant is typing...</span>
           </div>
         )}
         <div ref={messagesEndRef} />
@@ -250,11 +262,11 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
 
       <div className={clsx(
         "flex flex-col p-4 border-t",
-        isDark ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"
+        isDark ? "bg-black/50 border-gray-800" : "bg-white/50 border-gray-200"
       )}>
         {input.length > 0 && (
           <div className={clsx(
-            "text-xs mb-1 text-right",
+            "text-xs mb-1 text-right font-extralight",
             isDark ? "text-gray-400" : "text-gray-500"
           )}>
             {input.length}/500 characters
@@ -268,24 +280,24 @@ const Chatbot = ({ onClose }: { onClose: () => void }) => {
             onKeyPress={handleKeyPress}
             placeholder="Type your message..."
             className={clsx(
-              "flex-grow p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors",
+              "flex-grow p-3 rounded-xl focus:outline-none focus:ring-2 transition-colors font-extralight",
               isDark 
-                ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-indigo-500"
-                : "bg-white border-gray-300 text-gray-900 focus:ring-blue-500"
+                ? "bg-black/50 border border-gray-700 text-white placeholder-gray-400 focus:ring-blue-500"
+                : "bg-white border border-gray-300 text-gray-900 focus:ring-blue-500"
             )}
           />
           <button
             onClick={sendMessage}
             disabled={isLoading || !input.trim()}
             className={clsx(
-              "ml-3 p-3 rounded-lg shadow transition-all flex items-center justify-center",
+              "ml-3 p-3 rounded-xl shadow transition-all flex items-center justify-center",
               (!input.trim() || isLoading)
                 ? isDark 
                   ? "bg-gray-700 cursor-not-allowed"
                   : "bg-gray-400 cursor-not-allowed"
                 : isDark
-                  ? "bg-indigo-600 hover:bg-indigo-700 text-white"
-                  : "bg-blue-600 hover:bg-blue-700 text-white"
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+                  : "bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
             )}
           >
             <Send size={18} />
