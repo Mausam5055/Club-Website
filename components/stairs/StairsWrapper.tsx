@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import Stairs from './index';
 import { useStairs } from './StairsContext';
@@ -15,22 +15,32 @@ export default function StairsWrapper({ children, backgroundColor }: StairsWrapp
   const searchParams = useSearchParams();
   const { isTransitioning, startTransition, endTransition } = useStairs();
   const [displayChildren, setDisplayChildren] = useState(children);
-  const prevPathname = useRef<string | null>(null);
-  const prevSearchParams = useRef<string | null>(null);
 
   // Create a string representation of the current route
   const currentRoute = `${pathname}?${searchParams?.toString() || ''}`;
 
   useEffect(() => {
-    // Create a string representation of the previous route
-    const prevRoute = prevPathname.current ? `${prevPathname.current}?${prevSearchParams.current || ''}` : null;
+    // Check if this is a page refresh by looking at sessionStorage
+    let prevRoute: string | null = null;
+    let isPageRefresh = false;
     
-    // Only trigger transition if the route actually changed
-    if (prevRoute === null || currentRoute !== prevRoute) {
-      // Update the ref values
-      prevPathname.current = pathname;
-      prevSearchParams.current = searchParams?.toString() || '';
-      
+    if (typeof window !== 'undefined') {
+      try {
+        prevRoute = sessionStorage.getItem('lastRoute');
+        isPageRefresh = sessionStorage.getItem('isPageRefresh') === 'true';
+        
+        // Save current route to sessionStorage
+        sessionStorage.setItem('lastRoute', currentRoute);
+        sessionStorage.setItem('isPageRefresh', 'true');
+      } catch (e) {
+        // Ignore errors in sessionStorage
+      }
+    }
+    
+    // Trigger transition if:
+    // 1. The route actually changed (navigation between pages), or
+    // 2. This is a page refresh and we want to show the transition
+    if ((prevRoute !== null && currentRoute !== prevRoute) || isPageRefresh) {
       // Start transition
       startTransition();
       
@@ -40,12 +50,36 @@ export default function StairsWrapper({ children, backgroundColor }: StairsWrapp
         endTransition();
       }, 600); // This should match the duration of your stairs animation
       
-      return () => clearTimeout(timer);
+      // Reset the page refresh flag after a short delay
+      const resetTimer = setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          try {
+            sessionStorage.setItem('isPageRefresh', 'false');
+          } catch (e) {
+            // Ignore errors in sessionStorage
+          }
+        }
+      }, 100);
+      
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(resetTimer);
+      };
     } else {
-      // If route didn't change, just update the children
+      // If this is the very first load, just update the children
       setDisplayChildren(children);
+      
+      // Set the initial route in sessionStorage
+      if (typeof window !== 'undefined' && prevRoute === null) {
+        try {
+          sessionStorage.setItem('lastRoute', currentRoute);
+          sessionStorage.setItem('isPageRefresh', 'false');
+        } catch (e) {
+          // Ignore errors in sessionStorage
+        }
+      }
     }
-  }, [currentRoute, children, pathname, searchParams, startTransition, endTransition]);
+  }, [currentRoute, children, startTransition, endTransition]);
 
   return (
     <Stairs backgroundColor={backgroundColor}>

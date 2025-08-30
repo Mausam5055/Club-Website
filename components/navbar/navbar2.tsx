@@ -45,16 +45,14 @@ const Navbar2: React.FC = () => {
   };
 
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
-    // For internal navigation, trigger the stairs transition
+    // For internal navigation, let StairsWrapper handle the transition
     if (href.startsWith('/') && !href.startsWith('/#') && !href.startsWith('http')) {
-      e.preventDefault();
-      // Only trigger transition if we're navigating to a different page
+      // Don't prevent default or manually trigger transition
+      // Just let the normal navigation happen
+      // The StairsWrapper will detect the route change and handle the transition
       if (href !== window.location.pathname) {
-        startTransition();
-        // Add a small delay to allow the transition to start
-        setTimeout(() => {
-          router.push(href);
-        }, 50); // Reduced delay
+        // Allow navigation to proceed normally
+        return;
       }
     }
   };
