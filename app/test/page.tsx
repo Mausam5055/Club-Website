@@ -1,16 +1,10 @@
-import TicketForm from '@/components/event/eventTicket'
-import Googlemap from '@/components/map/googlemap'
-import TutoralComp from '@/components/tutorial/tutoralComp'
-// import NewComp from '@/components/component/frontend/newComp'
-import React from 'react'
+import React from 'react';
+import SimpleTest from '@/components/stairs/SimpleTest';
 
-export default function page() {
+export default function TestPage() {
   return (
-    <div>
-      {/* <NewComp /> */}
-      {/* <Googlemap /> */}
-      {/* <TutoralComp /> */}
-      <TicketForm />
+    <div className="min-h-screen">
+      <SimpleTest />
     </div>
-  )
+  );
 }

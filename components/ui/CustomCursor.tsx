@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -12,6 +11,7 @@ interface CursorState {
   isHovering: boolean;
   isClicking: boolean;
   cursorType: 'default' | 'hover' | 'text' | 'link' | 'drag';
+  isMobile: boolean;
 }
 
 export default function CustomCursor() {
@@ -27,23 +27,48 @@ export default function CustomCursor() {
     isVisible: false,
     isHovering: false,
     isClicking: false,
-    cursorType: 'default'
+    cursorType: 'default',
+    isMobile: false
   });
 
+  // Check for mobile devices
   useEffect(() => {
-    // Check if device supports hover (desktop)
-    const hasHover = window.matchMedia('(hover: hover)').matches;
-    if (!hasHover) return;
+    const checkMobile = () => {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                      window.innerWidth <= 768 ||
+                      !window.matchMedia('(hover: hover)').matches;
+      setCursorState(prev => ({ ...prev, isMobile }));
+      
+      // Hide default cursor on desktop, show on mobile
+      if (isMobile) {
+        document.documentElement.style.cursor = 'auto';
+        document.body.style.cursor = 'auto';
+      } else {
+        document.documentElement.style.cursor = 'none';
+        document.body.style.cursor = 'none';
+      }
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      // Restore default cursor on unmount
+      document.documentElement.style.cursor = 'auto';
+      document.body.style.cursor = 'auto';
+    };
+  }, []);
+
+  useEffect(() => {
+    // Don't initialize cursor on mobile devices
+    if (cursorState.isMobile) return;
 
     const cursor = cursorRef.current;
     const cursorDot = cursorDotRef.current;
     const cursorRing = cursorRingRef.current;
 
     if (!cursor || !cursorDot || !cursorRing) return;
-
-    // Hide default cursor
-    document.documentElement.style.cursor = 'none';
-    document.body.style.cursor = 'none';
 
     // Initialize cursor visibility
     gsap.set([cursorDot, cursorRing], {
@@ -185,10 +210,7 @@ export default function CustomCursor() {
     document.addEventListener('selectionchange', handleTextSelection);
 
     // Cleanup
-    return () => {
-      document.documentElement.style.cursor = 'auto';
-      document.body.style.cursor = 'auto';
-      
+    return () => {      
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
@@ -201,19 +223,10 @@ export default function CustomCursor() {
         el.removeEventListener('mouseleave', handleElementLeave);
       });
     };
-  }, []);
+  }, [cursorState.isMobile]);
 
   // Don't render on mobile devices
-  useEffect(() => {
-    const hasHover = window.matchMedia('(hover: hover)').matches;
-    if (!hasHover) {
-      document.documentElement.style.cursor = 'auto';
-      document.body.style.cursor = 'auto';
-    }
-  }, []);
-
-  // Don't render on touch devices
-  if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) {
+  if (cursorState.isMobile) {
     return null;
   }
 
