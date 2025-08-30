@@ -1,20 +1,22 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useRouter } from "next/compat/router";
 import ThemeSwitch from "../toggle/toggleSwitch";
+import { useStairs } from "../stairs/StairsContext";
 
 const Navbar2: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const [isLinksHovered, setIsLinksHovered] = useState(false);
   const [isNavbarHovered, setIsNavbarHovered] = useState(false);
+  const { startTransition } = useStairs();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   // Add scroll handler function
-  const handleScroll = (e: React.MouseEvent<HTMLDivElement>, href: string) => {
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
     if (href.startsWith('/#')) {
       e.preventDefault();
       
@@ -42,6 +44,21 @@ const Navbar2: React.FC = () => {
     }
   };
 
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    // For internal navigation, trigger the stairs transition
+    if (href.startsWith('/') && !href.startsWith('/#') && !href.startsWith('http')) {
+      e.preventDefault();
+      // Only trigger transition if we're navigating to a different page
+      if (href !== window.location.pathname) {
+        startTransition();
+        // Add a small delay to allow the transition to start
+        setTimeout(() => {
+          router.push(href);
+        }, 50); // Reduced delay
+      }
+    }
+  };
+
   const navItems = [
     { name: "Home", href: "/#home" },
     { name: "Leaderboard", href: "https://leaderboard-linpack.vercel.app/" },
@@ -57,7 +74,7 @@ const Navbar2: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ease-out
+      className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-[9999] transition-all duration-500 ease-out
         bg-white/60 dark:bg-gray-900/60 shadow-2xl rounded-full px-4 py-2
         flex items-center justify-between
         border border-gray-200/40 dark:border-gray-700/30 backdrop-blur-xl
@@ -67,7 +84,7 @@ const Navbar2: React.FC = () => {
         }
       `}
       style={{ 
-        transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1), max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease'
+        transition: 'width 0.5s cubic-bezier(0.4, 0.2, 0.2, 1), max-width 0.5s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.3s ease'
       }}
       onMouseEnter={() => {
         setIsLinksHovered(true);
@@ -106,19 +123,37 @@ const Navbar2: React.FC = () => {
         }}
       >
         {navItems.map((item) => (
-          <Link key={item.name} href={item.href}>
-            <div
-              onClick={(e) => handleScroll(e, item.href)}
-              className={`rounded-full text-sm font-semibold tracking-wider text-gray-800 dark:text-gray-100 px-4 py-2.5 ${getItemStyle(item.name)}
-                ${router?.asPath === item.href ? 'text-yellow-500 underline font-bold bg-yellow-50/50 dark:bg-yellow-900/30' : ''}
-                hover:bg-gray-100/70 dark:hover:bg-gray-800/70 hover:scale-110 transform transition-all duration-300
-              `}
-              aria-label={item.name}
-              style={{ cursor: 'pointer' }}
-            >
-              {item.name}
-            </div>
-          </Link>
+          <div key={item.name} className="relative">
+            {item.href.startsWith('http') ? (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`rounded-full text-sm font-semibold tracking-wider text-gray-800 dark:text-gray-100 px-4 py-2.5 ${getItemStyle(item.name)}
+                  hover:bg-gray-100/70 dark:hover:bg-gray-800/70 hover:scale-110 transform transition-all duration-300
+                `}
+                aria-label={item.name}
+                style={{ cursor: 'pointer' }}
+              >
+                {item.name}
+              </a>
+            ) : (
+              <Link 
+                href={item.href}
+                onClick={(e) => {
+                  handleScroll(e, item.href);
+                  handleNavigation(e, item.href);
+                }}
+                className={`rounded-full text-sm font-semibold tracking-wider text-gray-800 dark:text-gray-100 px-4 py-2.5 ${getItemStyle(item.name)}
+                  hover:bg-gray-100/70 dark:hover:bg-gray-800/70 hover:scale-110 transform transition-all duration-300
+                `}
+                aria-label={item.name}
+                style={{ cursor: 'pointer' }}
+              >
+                {item.name}
+              </Link>
+            )}
+          </div>
         ))}
         <span className="ml-4 flex items-center"><ThemeSwitch /></span>
       </div>
@@ -176,62 +211,93 @@ const Navbar2: React.FC = () => {
           {/* Navigation Items */}
           <div className="space-y-3">
             {navItems.map((item, index) => (
-              <Link key={item.name} href={item.href}>
-                <div
-                  onClick={(e) => handleScroll(e, item.href)}
-                  className={`group relative overflow-hidden px-6 py-4 rounded-2xl transition-all duration-500 ease-out transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer
-                    ${router?.asPath === item.href 
-                      ? 'bg-gradient-to-r from-yellow-400/20 via-amber-400/15 to-orange-400/20 text-yellow-700 dark:text-yellow-400 shadow-lg border-2 border-yellow-300/40 dark:border-yellow-500/40' 
-                      : 'bg-white/70 dark:bg-gray-800/70 hover:bg-gradient-to-r hover:from-gray-100/80 hover:to-gray-50/80 dark:hover:from-gray-700/80 dark:hover:to-gray-800/80 text-gray-700 dark:text-gray-200 border border-gray-200/40 dark:border-gray-600/40 hover:border-gray-300/60 dark:hover:border-gray-500/60'
-                    }
-                    backdrop-blur-sm shadow-md hover:shadow-xl
-                  `}
-                  style={{
-                    animationDelay: `${index * 100}ms`,
-                    animation: isOpen ? `slideInUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards` : 'none'
-                  }}
-                  aria-label={item.name}
-                >
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 opacity-5 bg-grid-pattern" />
-                  
-                  {/* Animated background on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left rounded-2xl`} />
-                  
-                  <div className="relative flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      {/* Icon indicator */}
-                      <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                        router?.asPath === item.href 
-                          ? 'bg-gradient-to-r from-yellow-500 to-amber-500 shadow-lg shadow-yellow-500/30' 
-                          : 'bg-gray-300 dark:bg-gray-600 group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-purple-500'
-                      }`}></div>
+              <div key={item.name} className="relative">
+                {item.href.startsWith('http') ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`group relative overflow-hidden px-6 py-4 rounded-2xl transition-all duration-500 ease-out transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer
+                      bg-white/70 dark:bg-gray-800/70 hover:bg-gradient-to-r hover:from-gray-100/80 hover:to-gray-50/80 dark:hover:from-gray-700/80 dark:hover:to-gray-800/80 text-gray-700 dark:text-gray-200 border border-gray-200/40 dark:border-gray-600/40 hover:border-gray-300/60 dark:hover:border-gray-500/60
+                      backdrop-blur-sm shadow-md hover:shadow-xl
+                    `}
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                      animation: isOpen ? `slideInUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards` : 'none'
+                    }}
+                    aria-label={item.name}
+                  >
+                    {/* Background pattern */}
+                    <div className="absolute inset-0 opacity-5 bg-grid-pattern" />
+                    
+                    {/* Animated background on hover */}
+                    <div className={`absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left rounded-2xl`} />
+                    
+                    <div className="relative flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        {/* Icon indicator */}
+                        <div className={`w-3 h-3 rounded-full transition-all duration-300 bg-gray-300 dark:bg-gray-600 group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-purple-500`}></div>
+                        
+                        <span className="font-extralight text-base tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm">
+                          {item.name}
+                        </span>
+                      </div>
                       
-                      <span className="font-extralight text-base tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm">
-                        {item.name}
-                      </span>
+                      {/* Arrow indicator */}
+                      <div className={`transition-all duration-300 text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 group-hover:translate-x-1`}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                ) : (
+                  <Link 
+                    href={item.href}
+                    onClick={(e) => {
+                      handleScroll(e, item.href);
+                      handleNavigation(e, item.href);
+                      setIsOpen(false);
+                    }}
+                    className={`group relative overflow-hidden px-6 py-4 rounded-2xl transition-all duration-500 ease-out transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer
+                      bg-white/70 dark:bg-gray-800/70 hover:bg-gradient-to-r hover:from-gray-100/80 hover:to-gray-50/80 dark:hover:from-gray-700/80 dark:hover:to-gray-800/80 text-gray-700 dark:text-gray-200 border border-gray-200/40 dark:border-gray-600/40 hover:border-gray-300/60 dark:hover:border-gray-500/60
+                      backdrop-blur-sm shadow-md hover:shadow-xl
+                    `}
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                      animation: isOpen ? `slideInUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards` : 'none'
+                    }}
+                    aria-label={item.name}
+                  >
+                    {/* Background pattern */}
+                    <div className="absolute inset-0 opacity-5 bg-grid-pattern" />
+                    
+                    {/* Animated background on hover */}
+                    <div className={`absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left rounded-2xl`} />
+                    
+                    <div className="relative flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        {/* Icon indicator */}
+                        <div className={`w-3 h-3 rounded-full transition-all duration-300 bg-gray-300 dark:bg-gray-600 group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-purple-500`}></div>
+                        
+                        <span className="font-extralight text-base tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm">
+                          {item.name}
+                        </span>
+                      </div>
+                      
+                      {/* Arrow indicator */}
+                      <div className={`transition-all duration-300 text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 group-hover:translate-x-1`}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z"/>
+                        </svg>
+                      </div>
                     </div>
                     
-                    {/* Arrow indicator */}
-                    <div className={`transition-all duration-300 ${
-                      router?.asPath === item.href 
-                        ? 'text-yellow-600 dark:text-yellow-400' 
-                        : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 group-hover:translate-x-1'
-                    }`}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z"/>
-                      </svg>
-                    </div>
-                  </div>
-                  
-                  {/* Active indicator line */}
-                  <div className={`absolute bottom-0 left-6 right-6 h-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full transition-all duration-300 transform ${
-                    router?.asPath === item.href 
-                      ? 'opacity-100 scale-x-100' 
-                      : 'opacity-0 scale-x-0 group-hover:opacity-60 group-hover:scale-x-100'
-                  }`} />
-                </div>
-              </Link>
+                    {/* Active indicator line */}
+                    <div className={`absolute bottom-0 left-6 right-6 h-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full transition-all duration-300 transform scale-x-0 group-hover:scale-x-100`} />
+                  </Link>
+                )}
+              </div>
             ))}
           </div>
           

@@ -20,15 +20,23 @@ export const expand = {
         }
     })
 }
+
 export const opacity = {
     initial: {
         opacity: 0.5
     },
     enter: {
-        opacity: 0
+        opacity: 0,
+        transition: {
+            duration: 0.4,
+            ease: [0.215, 0.61, 0.355, 1],
+        }
     },
     exit: {
         opacity: 0.5,
-        
+        transition: {
+            duration: 0.4,
+            ease: [0.215, 0.61, 0.355, 1],
+        }
     }
 }
