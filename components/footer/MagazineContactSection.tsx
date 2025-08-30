@@ -65,6 +65,41 @@ export default function MagazineContactSection() {
       theme: "purple",
     };
 
+    // Initialize widgets for both desktop and mobile after a short delay
+    const initWidgets = () => {
+      // Small delay to ensure DOM is ready
+      setTimeout(() => {
+        if (window.CustomSubstackWidget && window.CustomSubstackWidget.init) {
+          // Initialize desktop widget
+          const desktopContainer = document.getElementById("custom-substack-embed");
+          if (desktopContainer) {
+            try {
+              window.CustomSubstackWidget.init(desktopContainer);
+            } catch (e) {
+              console.log("Error initializing desktop Substack widget:", e);
+            }
+          }
+          
+          // Initialize mobile widget
+          const mobileContainer = document.getElementById("custom-substack-embed-mobile");
+          if (mobileContainer) {
+            try {
+              window.CustomSubstackWidget.init(mobileContainer);
+            } catch (e) {
+              console.log("Error initializing mobile Substack widget:", e);
+            }
+          }
+        }
+      }, 100);
+    };
+
+    // Check if widget is already loaded, otherwise wait for it
+    if (window.CustomSubstackWidget && window.CustomSubstackWidget.init) {
+      initWidgets();
+    } else {
+      script.onload = initWidgets;
+    }
+
     return () => {
       // Cleanup the script when the component unmounts
       if (document.body.contains(script)) {
@@ -221,8 +256,8 @@ export default function MagazineContactSection() {
                   </div>
                 </div>
 
-                {/* Newsletter Subscription - Hidden on mobile, shown on desktop */}
-                <div className="pt-8 border-t border-gray-200 dark:border-gray-800 hidden lg:block">
+                {/* Newsletter Subscription - Visible on all devices */}
+                <div className="pt-8 border-t border-gray-200 dark:border-gray-800">
                   <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 rounded-xl p-6 border border-blue-100 dark:border-blue-900/30">
                     <div className="text-center mb-6">
                       <div className="inline-flex items-center space-x-2 mb-3">
@@ -331,37 +366,6 @@ export default function MagazineContactSection() {
               </form>
             </motion.div>
           </div>
-
-          {/* Newsletter Section - Mobile Only (appears below contact form) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="mt-16 lg:hidden order-3"
-          >
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 rounded-xl p-6 border border-blue-100 dark:border-blue-900/30">
-              <div className="text-center mb-6">
-                <div className="inline-flex items-center space-x-2 mb-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                  <p className="text-sm font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-                    Newsletter
-                  </p>
-                </div>
-                <h4 className="text-xl md:text-2xl font-extralight tracking-[-0.02em] text-black dark:text-white mb-3 font-serif leading-tight">
-                  Stay Connected
-                </h4>
-                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed font-extralight tracking-wide">
-                  Get updates on research breakthroughs, events, and mathematical discoveries
-                </p>
-              </div>
-              
-              {/* Substack Widget Container */}
-              <div className="max-w-md mx-auto mb-4">
-                <div id="custom-substack-embed-mobile" className="mb-4"></div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
