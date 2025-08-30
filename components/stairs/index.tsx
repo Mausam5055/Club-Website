@@ -45,9 +45,9 @@ export default function Stairs({ children, backgroundColor }: StairsProps) {
             exit="exit"
             variants={opacity}
             className="transition-background"
-            style={{ position: 'fixed', width: '100%', height: '100vh', backgroundColor: 'black', zIndex: 9998, pointerEvents: 'none', top: 0, left: 0 }}
+            style={{ position: 'fixed', width: '100%', height: '100vh', backgroundColor: 'black', zIndex: 9999, pointerEvents: 'none', top: 0, left: 0 }}
           />
-          <div className="transition-container" style={{ position: 'fixed', width: '100vw', height: '100vh', display: 'flex', left: 0, top: 0, pointerEvents: 'none', zIndex: 9998 }}>
+          <div className="transition-container" style={{ position: 'fixed', width: '100vw', height: '100vh', display: 'flex', left: 0, top: 0, pointerEvents: 'none', zIndex: 9999 }}>
             {
               [...Array(nbOfColumns)].map((_, i) => {
                 const delay = 0.05 * (nbOfColumns - i);
@@ -58,7 +58,7 @@ export default function Stairs({ children, backgroundColor }: StairsProps) {
                     animate="enter"
                     exit="exit"
                     variants={createExpandVariant(delay)}
-                    style={{ position: 'relative', height: '100%', width: '100%', backgroundColor: 'black', zIndex: 9998 }}
+                    style={{ position: 'relative', height: '100%', width: '100%', backgroundColor: 'black', zIndex: 9999 }}
                   />
                 );
               })

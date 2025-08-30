@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={`${inter.className}`}>
         <Providers>
           <CustomCursor />
-          <div className="relative z-[9999]">
+          <div className="relative z-[9997]">
             <Navbar2 />
           </div>
           <StairsWrapper>
