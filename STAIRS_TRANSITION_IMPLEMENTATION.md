@@ -26,10 +26,6 @@ This document describes the implementation of the stairs page transition animati
 - Detects route changes using `usePathname()` and `useSearchParams()`
 - Triggers transitions when navigating between pages
 
-### 5. Test Components
-- Created several test pages to verify the transition works correctly
-- `/test`, `/test-transition`, and `/final-test` routes for testing
-
 ## Integration Points
 
 ### 1. Providers Integration
@@ -56,7 +52,7 @@ This document describes the implementation of the stairs page transition animati
 - Delay between transition start and page content change: 600ms
 
 ## Testing
-- Created multiple test pages to verify the transition works
+- Created test pages to verify the transition works correctly
 - Tested navigation between different pages
 - Verified the animation plays in both directions
 
@@ -71,14 +67,10 @@ The stairs transition will automatically play when navigating between pages usin
 - `app/providers/providers.tsx`
 - `components/navbar/navbar2.tsx`
 - `styles/globals.css`
+- `app/test/page.tsx`
 
 ## Files Created
 - `components/stairs/anim.js`
 - `components/stairs/index.tsx`
 - `components/stairs/StairsContext.tsx`
 - `components/stairs/StairsWrapper.tsx`
-- `components/stairs/SimpleTest.tsx`
-- `components/stairs/TestStairs.tsx`
-- `app/test/page.tsx`
-- `app/test-transition/page.tsx`
-- `app/final-test/page.tsx`

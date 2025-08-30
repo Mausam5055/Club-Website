@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { opacity, expand } from './anim';
 import { useStairs } from './StairsContext';
 
@@ -14,14 +14,14 @@ export default function Stairs({ children, backgroundColor }: StairsProps) {
   const nbOfColumns = 5;
 
   // Create animation variants with delay calculated directly
-  const createExpandVariant = (delay: number) => ({
+  const createExpandVariant = (delay: number): Variants => ({
     initial: { top: 0 },
     enter: { 
       top: "100vh",
       transition: {
         duration: 0.4,
         delay: delay,
-        ease: [0.215, 0.61, 0.355, 1],
+        ease: [0.215, 0.61, 0.355, 1]
       },
       transitionEnd: { height: "0", top: "0" }
     },

@@ -5,6 +5,7 @@ import { Providers } from "./providers/providers";
 import Navbar2 from "@/components/navbar/navbar2";
 import CustomCursor from "@/components/ui/CustomCursor";
 import StairsWrapper from "@/components/stairs/StairsWrapper";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,9 +27,11 @@ export default function RootLayout({
           <div className="relative z-[9997]">
             <Navbar2 />
           </div>
-          <StairsWrapper>
-            {children}
-          </StairsWrapper>
+          <Suspense fallback={<div>{children}</div>}>
+            <StairsWrapper>
+              {children}
+            </StairsWrapper>
+          </Suspense>
         </Providers>
       </body>
     </html>
