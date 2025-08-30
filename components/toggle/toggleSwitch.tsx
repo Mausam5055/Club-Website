@@ -4,12 +4,27 @@ import { FiSun, FiMoon } from "react-icons/fi"
 import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import Image from "next/image"
+import { useStairs } from '@/components/stairs/StairsContext'
 
 export default function ThemeSwitch() {
   const [mounted, setMounted] = useState(false)
   const { setTheme, resolvedTheme } = useTheme()
+  const { startTransition, endTransition } = useStairs()
 
   useEffect(() =>  setMounted(true), [])
+
+  const handleThemeChange = (newTheme: string) => {
+    // Start the stairs transition
+    startTransition()
+    
+    // Change the theme
+    setTheme(newTheme)
+    
+    // End the transition after a delay
+    setTimeout(() => {
+      endTransition()
+    }, 600) // This should match the duration of your stairs animation
+  }
 
   if (!mounted) return (
     <Image
@@ -25,11 +40,11 @@ export default function ThemeSwitch() {
   )
 
   if (resolvedTheme === 'dark') {
-    return <FiSun onClick={() => setTheme('light')} />
+    return <FiSun onClick={() => handleThemeChange('light')} className="cursor-pointer" />
   }
 
   if (resolvedTheme === 'light') {
-    return <FiMoon onClick={() => setTheme('dark')} />
+    return <FiMoon onClick={() => handleThemeChange('dark')} className="cursor-pointer" />
   }
 
 }
